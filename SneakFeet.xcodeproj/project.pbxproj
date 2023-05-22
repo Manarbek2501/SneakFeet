@@ -11,6 +11,14 @@
 		4B2EC3D62A1B7C980090A8D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3D52A1B7C980090A8D4 /* ContentView.swift */; };
 		4B2EC3D82A1B7C9A0090A8D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2EC3D72A1B7C9A0090A8D4 /* Assets.xcassets */; };
 		4B2EC3DB2A1B7C9A0090A8D4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2EC3DA2A1B7C9A0090A8D4 /* Preview Assets.xcassets */; };
+		4B2EC3E32A1B7D080090A8D4 /* FirstOnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3E22A1B7D080090A8D4 /* FirstOnboardingScreen.swift */; };
+		4B2EC3E52A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3E42A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift */; };
+		4B2EC3E72A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3E62A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift */; };
+		4B2EC3E92A1B806D0090A8D4 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3E82A1B806D0090A8D4 /* OnboardingScreen.swift */; };
+		4B2EC3EC2A1B89480090A8D4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3EB2A1B89480090A8D4 /* CustomButton.swift */; };
+		4B2EC3EF2A1B9D900090A8D4 /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3EE2A1B9D900090A8D4 /* WelcomeScreenView.swift */; };
+		4B2EC3F22A1BA6DA0090A8D4 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3F12A1BA6DA0090A8D4 /* SignUpScreen.swift */; };
+		4B2EC3F42A1BA6EF0090A8D4 /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3F32A1BA6EE0090A8D4 /* SignInScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +27,14 @@
 		4B2EC3D52A1B7C980090A8D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4B2EC3D72A1B7C9A0090A8D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B2EC3DA2A1B7C9A0090A8D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4B2EC3E22A1B7D080090A8D4 /* FirstOnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingScreen.swift; sourceTree = "<group>"; };
+		4B2EC3E42A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingScreen.swift; sourceTree = "<group>"; };
+		4B2EC3E62A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingScreen.swift; sourceTree = "<group>"; };
+		4B2EC3E82A1B806D0090A8D4 /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
+		4B2EC3EB2A1B89480090A8D4 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		4B2EC3EE2A1B9D900090A8D4 /* WelcomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenView.swift; sourceTree = "<group>"; };
+		4B2EC3F12A1BA6DA0090A8D4 /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
+		4B2EC3F32A1BA6EE0090A8D4 /* SignInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +67,9 @@
 		4B2EC3D22A1B7C980090A8D4 /* SneakFeet */ = {
 			isa = PBXGroup;
 			children = (
+				4B2EC3ED2A1B9D7C0090A8D4 /* WelcomeScreen */,
+				4B2EC3EA2A1B892F0090A8D4 /* CustomHelpers */,
+				4B2EC3E12A1B7CA90090A8D4 /* Onboarding */,
 				4B2EC3D32A1B7C980090A8D4 /* SneakFeetApp.swift */,
 				4B2EC3D52A1B7C980090A8D4 /* ContentView.swift */,
 				4B2EC3D72A1B7C9A0090A8D4 /* Assets.xcassets */,
@@ -65,6 +84,43 @@
 				4B2EC3DA2A1B7C9A0090A8D4 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4B2EC3E12A1B7CA90090A8D4 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3E82A1B806D0090A8D4 /* OnboardingScreen.swift */,
+				4B2EC3E22A1B7D080090A8D4 /* FirstOnboardingScreen.swift */,
+				4B2EC3E42A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift */,
+				4B2EC3E62A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		4B2EC3EA2A1B892F0090A8D4 /* CustomHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3EB2A1B89480090A8D4 /* CustomButton.swift */,
+			);
+			path = CustomHelpers;
+			sourceTree = "<group>";
+		};
+		4B2EC3ED2A1B9D7C0090A8D4 /* WelcomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3EE2A1B9D900090A8D4 /* WelcomeScreenView.swift */,
+				4B2EC3F02A1BA6AD0090A8D4 /* Auth */,
+			);
+			path = WelcomeScreen;
+			sourceTree = "<group>";
+		};
+		4B2EC3F02A1BA6AD0090A8D4 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3F12A1BA6DA0090A8D4 /* SignUpScreen.swift */,
+				4B2EC3F32A1BA6EE0090A8D4 /* SignInScreen.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +194,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2EC3D62A1B7C980090A8D4 /* ContentView.swift in Sources */,
+				4B2EC3F42A1BA6EF0090A8D4 /* SignInScreen.swift in Sources */,
+				4B2EC3EF2A1B9D900090A8D4 /* WelcomeScreenView.swift in Sources */,
+				4B2EC3F22A1BA6DA0090A8D4 /* SignUpScreen.swift in Sources */,
+				4B2EC3E32A1B7D080090A8D4 /* FirstOnboardingScreen.swift in Sources */,
+				4B2EC3E92A1B806D0090A8D4 /* OnboardingScreen.swift in Sources */,
+				4B2EC3E72A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift in Sources */,
+				4B2EC3EC2A1B89480090A8D4 /* CustomButton.swift in Sources */,
+				4B2EC3E52A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift in Sources */,
 				4B2EC3D42A1B7C980090A8D4 /* SneakFeetApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
