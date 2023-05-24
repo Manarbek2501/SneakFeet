@@ -32,10 +32,10 @@ struct WelcomeScreenView: View {
                         Text("I already have an account")
                             .foregroundColor(Color.black)
                             .font(.system(size: 17, weight: .semibold))
-                            .padding(.bottom, 74)
                     }
                 }
                 .padding([.leading, .trailing], 16)
+                .padding(.bottom, 74)
             }
         }
     }

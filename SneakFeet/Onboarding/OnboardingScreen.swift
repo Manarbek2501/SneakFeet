@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OnboardingScreen: View {
     @State private var selectedTab = 0
+    @Binding var screenState: ScreenState
     var body: some View {
             ZStack{
                 TabView(selection: $selectedTab) {
@@ -40,9 +41,11 @@ struct OnboardingScreen: View {
                                         selectedTab = 1
                                     } else if selectedTab == 1 {
                                         selectedTab = 2
+                                    } else if selectedTab == 2 {
+                                        screenState = .welcomeScreen
                                     }
+                                    UserDefaults.standard.onBoarding = true
                                 }
-
                             }
                             .padding(.bottom, 58)
                     }
@@ -70,6 +73,6 @@ struct OnboardingScreen: View {
 
 struct OnboardingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingScreen()
+        OnboardingScreen(screenState: .constant(.onboarding))
     }
 }

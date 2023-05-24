@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignInScreen: View {
     @State private var username: String = ""
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationView {
             VStack {
@@ -37,17 +38,16 @@ struct SignInScreen: View {
             .padding([.leading, .trailing], 16)
             .navigationTitle("Welcome back!")
             .navigationBarTitleDisplayMode(.inline)
+            .ignoresSafeArea(.keyboard)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     withAnimation {
-                        NavigationLink {
-                            WelcomeScreenView()
-                                .navigationBarBackButtonHidden(true)
-                        } label: {
-                            Image(systemName: "chevron.backward")
-                                .foregroundColor(.black)
-                                .font(.system(size: 23, weight: .medium))
-                        }
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(.black)
+                            .font(.system(size: 23, weight: .medium))
+                            .onTapGesture {
+                                dismiss()
+                            }
                     }
                 }
             }

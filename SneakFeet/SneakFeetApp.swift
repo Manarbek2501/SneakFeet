@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct SneakFeetApp: App {
+    @StateObject var storeModal: StoreModal = .init()
     var body: some Scene {
         WindowGroup {
-            OnboardingScreen()
+            ContentView()
+                .environmentObject(storeModal)
         }
     }
 }

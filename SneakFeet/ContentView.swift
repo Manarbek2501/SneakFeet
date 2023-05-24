@@ -7,15 +7,34 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+extension UserDefaults {
+    var onBoarding: Bool {
+        get {
+            return (UserDefaults.standard.value(forKey: "onboardingScreen") as? Bool) ?? false
         }
-        .padding()
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "onboardingScreen")
+        }
+    }
+}
+
+struct ContentView: View {
+    @State var screenState: ScreenState = .onboarding
+    var body: some View {
+        switch screenState {
+        case .onboarding:
+            if UserDefaults.standard.onBoarding {
+                WelcomeScreenView()
+            } else {
+                OnboardingScreen(screenState: $screenState)
+            }
+        case .welcomeScreen:
+            if UserDefaults.standard.onBoarding {
+                WelcomeScreenView()
+            } else {
+                OnboardingScreen(screenState: $screenState)
+            }
+        }
     }
 }
 

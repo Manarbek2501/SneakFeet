@@ -19,6 +19,16 @@
 		4B2EC3EF2A1B9D900090A8D4 /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3EE2A1B9D900090A8D4 /* WelcomeScreenView.swift */; };
 		4B2EC3F22A1BA6DA0090A8D4 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3F12A1BA6DA0090A8D4 /* SignUpScreen.swift */; };
 		4B2EC3F42A1BA6EF0090A8D4 /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3F32A1BA6EE0090A8D4 /* SignInScreen.swift */; };
+		4B2EC3F72A1DF8610090A8D4 /* CatalogScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3F62A1DF8610090A8D4 /* CatalogScreenView.swift */; };
+		4B2EC3F92A1DF8830090A8D4 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3F82A1DF8830090A8D4 /* MainScreenView.swift */; };
+		4B2EC3FD2A1DF8BE0090A8D4 /* ProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3FC2A1DF8BE0090A8D4 /* ProfileScreenView.swift */; };
+		4B2EC3FF2A1E09720090A8D4 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC3FE2A1E09720090A8D4 /* WebView.swift */; };
+		4B2EC4022A1E108D0090A8D4 /* AccountInfoScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4012A1E108D0090A8D4 /* AccountInfoScreenView.swift */; };
+		4B2EC4042A1E14180090A8D4 /* ShoeSizeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4032A1E14180090A8D4 /* ShoeSizeScreenView.swift */; };
+		4B2EC4072A1E1B8C0090A8D4 /* SneakFeetModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4062A1E1B8C0090A8D4 /* SneakFeetModal.swift */; };
+		4B2EC40E2A1E3AFC0090A8D4 /* CotologCardsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC40D2A1E3AFC0090A8D4 /* CotologCardsRow.swift */; };
+		4B2EC4112A1E4C3E0090A8D4 /* CartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4102A1E4C3E0090A8D4 /* CartScreenView.swift */; };
+		4B2EC4132A1E53820090A8D4 /* CustomChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4122A1E53820090A8D4 /* CustomChoose.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +45,16 @@
 		4B2EC3EE2A1B9D900090A8D4 /* WelcomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenView.swift; sourceTree = "<group>"; };
 		4B2EC3F12A1BA6DA0090A8D4 /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
 		4B2EC3F32A1BA6EE0090A8D4 /* SignInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInScreen.swift; sourceTree = "<group>"; };
+		4B2EC3F62A1DF8610090A8D4 /* CatalogScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogScreenView.swift; sourceTree = "<group>"; };
+		4B2EC3F82A1DF8830090A8D4 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		4B2EC3FC2A1DF8BE0090A8D4 /* ProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenView.swift; sourceTree = "<group>"; };
+		4B2EC3FE2A1E09720090A8D4 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		4B2EC4012A1E108D0090A8D4 /* AccountInfoScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoScreenView.swift; sourceTree = "<group>"; };
+		4B2EC4032A1E14180090A8D4 /* ShoeSizeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoeSizeScreenView.swift; sourceTree = "<group>"; };
+		4B2EC4062A1E1B8C0090A8D4 /* SneakFeetModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SneakFeetModal.swift; sourceTree = "<group>"; };
+		4B2EC40D2A1E3AFC0090A8D4 /* CotologCardsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CotologCardsRow.swift; sourceTree = "<group>"; };
+		4B2EC4102A1E4C3E0090A8D4 /* CartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreenView.swift; sourceTree = "<group>"; };
+		4B2EC4122A1E53820090A8D4 /* CustomChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChoose.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +87,8 @@
 		4B2EC3D22A1B7C980090A8D4 /* SneakFeet */ = {
 			isa = PBXGroup;
 			children = (
+				4B2EC4052A1E1B700090A8D4 /* Modal */,
+				4B2EC3F52A1DF83F0090A8D4 /* CatalogScreen */,
 				4B2EC3ED2A1B9D7C0090A8D4 /* WelcomeScreen */,
 				4B2EC3EA2A1B892F0090A8D4 /* CustomHelpers */,
 				4B2EC3E12A1B7CA90090A8D4 /* Onboarding */,
@@ -101,6 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				4B2EC3EB2A1B89480090A8D4 /* CustomButton.swift */,
+				4B2EC3FE2A1E09720090A8D4 /* WebView.swift */,
+				4B2EC4122A1E53820090A8D4 /* CustomChoose.swift */,
 			);
 			path = CustomHelpers;
 			sourceTree = "<group>";
@@ -121,6 +145,52 @@
 				4B2EC3F32A1BA6EE0090A8D4 /* SignInScreen.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		4B2EC3F52A1DF83F0090A8D4 /* CatalogScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3F82A1DF8830090A8D4 /* MainScreenView.swift */,
+				4B2EC4082A1E2D0B0090A8D4 /* CotologScreen */,
+				4B2EC40F2A1E4BF00090A8D4 /* CartScreen */,
+				4B2EC4002A1E10640090A8D4 /* ProfileScreen */,
+			);
+			path = CatalogScreen;
+			sourceTree = "<group>";
+		};
+		4B2EC4002A1E10640090A8D4 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3FC2A1DF8BE0090A8D4 /* ProfileScreenView.swift */,
+				4B2EC4012A1E108D0090A8D4 /* AccountInfoScreenView.swift */,
+				4B2EC4032A1E14180090A8D4 /* ShoeSizeScreenView.swift */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		4B2EC4052A1E1B700090A8D4 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC4062A1E1B8C0090A8D4 /* SneakFeetModal.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		4B2EC4082A1E2D0B0090A8D4 /* CotologScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC3F62A1DF8610090A8D4 /* CatalogScreenView.swift */,
+				4B2EC40D2A1E3AFC0090A8D4 /* CotologCardsRow.swift */,
+			);
+			path = CotologScreen;
+			sourceTree = "<group>";
+		};
+		4B2EC40F2A1E4BF00090A8D4 /* CartScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC4102A1E4C3E0090A8D4 /* CartScreenView.swift */,
+			);
+			path = CartScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,15 +264,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2EC3D62A1B7C980090A8D4 /* ContentView.swift in Sources */,
+				4B2EC4042A1E14180090A8D4 /* ShoeSizeScreenView.swift in Sources */,
 				4B2EC3F42A1BA6EF0090A8D4 /* SignInScreen.swift in Sources */,
+				4B2EC3F72A1DF8610090A8D4 /* CatalogScreenView.swift in Sources */,
+				4B2EC4072A1E1B8C0090A8D4 /* SneakFeetModal.swift in Sources */,
 				4B2EC3EF2A1B9D900090A8D4 /* WelcomeScreenView.swift in Sources */,
+				4B2EC3FD2A1DF8BE0090A8D4 /* ProfileScreenView.swift in Sources */,
 				4B2EC3F22A1BA6DA0090A8D4 /* SignUpScreen.swift in Sources */,
+				4B2EC3FF2A1E09720090A8D4 /* WebView.swift in Sources */,
+				4B2EC4132A1E53820090A8D4 /* CustomChoose.swift in Sources */,
+				4B2EC40E2A1E3AFC0090A8D4 /* CotologCardsRow.swift in Sources */,
 				4B2EC3E32A1B7D080090A8D4 /* FirstOnboardingScreen.swift in Sources */,
 				4B2EC3E92A1B806D0090A8D4 /* OnboardingScreen.swift in Sources */,
+				4B2EC3F92A1DF8830090A8D4 /* MainScreenView.swift in Sources */,
+				4B2EC4022A1E108D0090A8D4 /* AccountInfoScreenView.swift in Sources */,
 				4B2EC3E72A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift in Sources */,
 				4B2EC3EC2A1B89480090A8D4 /* CustomButton.swift in Sources */,
 				4B2EC3E52A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift in Sources */,
 				4B2EC3D42A1B7C980090A8D4 /* SneakFeetApp.swift in Sources */,
+				4B2EC4112A1E4C3E0090A8D4 /* CartScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
