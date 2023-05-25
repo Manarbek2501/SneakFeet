@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CotologCardsRow: View {
-    
+    let item: Card
+    @EnvironmentObject var storeModal: StoreModal
     @State private var clicked: Bool = false
     let title: String
     let description: String
@@ -39,6 +40,11 @@ struct CotologCardsRow: View {
                         }
                         .onTapGesture {
                             clicked.toggle()
+                            if clicked {
+                                storeModal.add(item: item)
+                            } else {
+                                storeModal.remove(item: item)
+                            }
                         }
                         .padding([.leading, .trailing], 4)
                         .frame(height: 40)
@@ -54,17 +60,18 @@ struct CotologCardsRow: View {
 
 struct CotologCardsRow_Previews: PreviewProvider {
     static var previews: some View {
-        CotologCardsRow(title: "Dolce", description: "dolce", image: "Dolce", price: "$245")
+        CotologCardsRow(item: Card.init(title: "", image: "", description: "", price: ""), title: "Dolce", description: "dolce", image: "Dolce", price: "$245")
+            .environmentObject(StoreModal())
     }
 }
 
 
-struct Card: Identifiable {
-    let id = UUID()
-    let title: String
-    let image: String
-    let description: String
-    let price: String
+struct Card: Identifiable, Equatable {
+    var id = UUID()
+    var title: String
+    var image: String
+    var description: String
+    var price: String
 }
 
 struct RowView: View {
@@ -75,7 +82,7 @@ struct RowView: View {
     var body: some View {
         HStack(spacing: horizontalSpacing) {
             ForEach(cards) { card in
-                CotologCardsRow(title: card.title, description: card.description, image: card.image, price: card.price)
+                CotologCardsRow(item: Card.init(title: card.title, image: card.image, description: card.description, price: card.price), title: card.title, description: card.description, image: card.image, price: card.price)
                     .frame(width: width, height: height)
             }
         }

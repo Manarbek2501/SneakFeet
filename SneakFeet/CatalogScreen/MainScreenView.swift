@@ -14,7 +14,7 @@ struct MainScreenView: View {
                 .tabItem {
                     Label("Catalog", systemImage: "house.fill")
                 }
-            CartScreenView()
+            CartListScreenView()
                 .tabItem {
                     Label("Cart", systemImage: "cart.fill.badge.plus")
                 }

@@ -29,6 +29,8 @@
 		4B2EC40E2A1E3AFC0090A8D4 /* CotologCardsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC40D2A1E3AFC0090A8D4 /* CotologCardsRow.swift */; };
 		4B2EC4112A1E4C3E0090A8D4 /* CartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4102A1E4C3E0090A8D4 /* CartScreenView.swift */; };
 		4B2EC4132A1E53820090A8D4 /* CustomChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4122A1E53820090A8D4 /* CustomChoose.swift */; };
+		4B2EC4192A1F3B8A0090A8D4 /* CartListScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4182A1F3B8A0090A8D4 /* CartListScreenView.swift */; };
+		4B2EC41B2A1F3BA50090A8D4 /* ListDesignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC41A2A1F3BA50090A8D4 /* ListDesignView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		4B2EC40D2A1E3AFC0090A8D4 /* CotologCardsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CotologCardsRow.swift; sourceTree = "<group>"; };
 		4B2EC4102A1E4C3E0090A8D4 /* CartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreenView.swift; sourceTree = "<group>"; };
 		4B2EC4122A1E53820090A8D4 /* CustomChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChoose.swift; sourceTree = "<group>"; };
+		4B2EC4182A1F3B8A0090A8D4 /* CartListScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartListScreenView.swift; sourceTree = "<group>"; };
+		4B2EC41A2A1F3BA50090A8D4 /* ListDesignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDesignView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				4B2EC4102A1E4C3E0090A8D4 /* CartScreenView.swift */,
+				4B2EC4182A1F3B8A0090A8D4 /* CartListScreenView.swift */,
+				4B2EC41A2A1F3BA50090A8D4 /* ListDesignView.swift */,
 			);
 			path = CartScreen;
 			sourceTree = "<group>";
@@ -272,6 +278,7 @@
 				4B2EC3FD2A1DF8BE0090A8D4 /* ProfileScreenView.swift in Sources */,
 				4B2EC3F22A1BA6DA0090A8D4 /* SignUpScreen.swift in Sources */,
 				4B2EC3FF2A1E09720090A8D4 /* WebView.swift in Sources */,
+				4B2EC4192A1F3B8A0090A8D4 /* CartListScreenView.swift in Sources */,
 				4B2EC4132A1E53820090A8D4 /* CustomChoose.swift in Sources */,
 				4B2EC40E2A1E3AFC0090A8D4 /* CotologCardsRow.swift in Sources */,
 				4B2EC3E32A1B7D080090A8D4 /* FirstOnboardingScreen.swift in Sources */,
@@ -282,6 +289,7 @@
 				4B2EC3EC2A1B89480090A8D4 /* CustomButton.swift in Sources */,
 				4B2EC3E52A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift in Sources */,
 				4B2EC3D42A1B7C980090A8D4 /* SneakFeetApp.swift in Sources */,
+				4B2EC41B2A1F3BA50090A8D4 /* ListDesignView.swift in Sources */,
 				4B2EC4112A1E4C3E0090A8D4 /* CartScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

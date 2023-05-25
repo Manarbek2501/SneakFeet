@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CartScreenView: View {
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -27,7 +28,6 @@ struct CartScreenView: View {
             }
                 .navigationTitle("Cart")
                 .navigationBarTitleDisplayMode(.inline)
-                
         }
     }
 }
