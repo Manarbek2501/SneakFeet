@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProfileScreenView: View {
     @EnvironmentObject var shoeSizeText: StoreModal
+    @EnvironmentObject var viewModal: AuthViewModal
+    @State private var showingAlert = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -36,6 +38,24 @@ struct ProfileScreenView: View {
                     CustomButton(title: "Sign Out")
                         .padding([.leading, .trailing], 16)
                         .padding(.bottom, 23)
+                        .onTapGesture {
+                            showingAlert = true
+                        }
+                        .alert("Are you sure you want to sign out?", isPresented: $showingAlert) {
+                            Button(role: .cancel) {
+                                withAnimation {
+                                    showingAlert = false
+                                }
+                            } label: {
+                                Text("Cancel")
+                            }
+                            Button(role: .destructive) {
+                                viewModal.signOut()
+                            } label: {
+                                Text("Confirm")
+                            }
+
+                        }
                 }
             }
             .navigationTitle("Profile")
@@ -48,6 +68,7 @@ struct ProfileScreenView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileScreenView()
             .environmentObject(StoreModal())
+            .environmentObject(AuthViewModal())
     }
 }
 

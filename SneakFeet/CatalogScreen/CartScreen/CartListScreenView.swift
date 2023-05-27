@@ -9,9 +9,11 @@ import SwiftUI
 
 struct CartListScreenView: View {
     @EnvironmentObject var cards: StoreModal
+    @State private var showOrderAlert: Bool = false
+    @State private var showBottomSheets: Bool = false
     var body: some View {
         if cards.cards.isEmpty {
-            CartScreenView()
+                CartScreenView()
         } else {
             NavigationView {
                 ZStack {
@@ -30,7 +32,7 @@ struct CartListScreenView: View {
                                     RoundedRectangle(cornerRadius: 0)
                                         .fill(Color.white)
                                     HStack {
-                                        Text("4 items: Total (Including Delivery) ")
+                                        Text("1 items: Total (Including Delivery) ")
                                         Text("$1232")
                                     }
                                 }
@@ -39,6 +41,34 @@ struct CartListScreenView: View {
                         }
                     }
                     .listStyle(.plain)
+                    Group {
+                        CustomButton(title: "Confirm order")
+                            .padding([.leading, .trailing], 16)
+                            .onTapGesture {
+                                showOrderAlert = true
+                            }
+                            .alert("Proceed with payment", isPresented: $showOrderAlert) {
+                                Button(role: .cancel) {
+                                    showOrderAlert = false
+                                } label: {
+                                    Text("Cancel")
+                                }
+                                Button(role: .none) {
+                                    showBottomSheets = true
+                                } label: {
+                                    Text("Confirm")
+                                }
+                            } message: {
+                                Text("Are you sure you want to confirm?")
+                            }
+                    }
+                    .padding(.bottom, 13)
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .sheet(isPresented: $showBottomSheets) {
+                        CustomBottomSheets.bottomSheets()
+                        .presentationDetents([.medium, .height(500)])
+                        .presentationDragIndicator(.hidden)
+                    }
                 }
                 .navigationTitle("Cart")
                 .navigationBarTitleDisplayMode(.inline)

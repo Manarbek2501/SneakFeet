@@ -12,6 +12,7 @@ struct ListDesignView: View {
     @State var title: String = ""
     @State var description: String = ""
     @State var price: String = ""
+    @State var stepperValue: Int = 1
     var body: some View {
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 0)
@@ -20,23 +21,21 @@ struct ListDesignView: View {
                     Image(image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: 4) {
                         Text(title)
                             .font(.system(size: 13, weight: .semibold))
                         Text(description)
                             .font(.system(size: 12, weight: .regular))
-                        Text(price)
+                        Text("$\(price)")
                             .font(.system(size: 12, weight: .semibold))
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                         ZStack {
                             RoundedRectangle(cornerRadius: 50)
                                 .fill(Color.black)
-                            Text("Add to cart")
-                                .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(Color.white)
+                            MyStepper(stepperValue: $stepperValue, in: 1...5)
                         }
                         .frame(width: 166 ,height: 36)
-                        .padding(.top, 8)
+                        .padding(.top, 12)
                     }
                     .padding(.leading, 16)
                 }

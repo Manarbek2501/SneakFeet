@@ -33,8 +33,8 @@ struct CotologCardsRow: View {
                             .font(.system(size: 12, weight: .semibold))
                         ZStack {
                             RoundedRectangle(cornerRadius: 50)
-                                .fill(clicked ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
-                            Text(clicked ? "Remove" : "Add to cart")
+                                .fill(clicked && !storeModal.cards.isEmpty ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
+                            Text(clicked && !storeModal.cards.isEmpty ? "Remove" : "Add to cart")
                                 .font(.system(size: 17, weight: .semibold))
                                 .foregroundColor(Color.white)
                         }
@@ -92,13 +92,13 @@ struct RowView: View {
 
 struct StoreCotolog {
     static var cards = [
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Jordan", image: "jordan1", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Jordan", image: "jordan2", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Off-White", image: "off-white", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "$1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "$1251"),
+        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Jordan", image: "jordan1", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Jordan", image: "jordan2", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Off-White", image: "off-white", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
+        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
     ]
 }

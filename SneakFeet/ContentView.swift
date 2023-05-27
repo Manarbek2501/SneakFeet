@@ -20,17 +20,26 @@ extension UserDefaults {
 
 struct ContentView: View {
     @State var screenState: ScreenState = .onboarding
+    @EnvironmentObject var viewModal: AuthViewModal
     var body: some View {
         switch screenState {
         case .onboarding:
             if UserDefaults.standard.onBoarding {
-                WelcomeScreenView()
+                if viewModal.userSessions != nil {
+                    MainScreenView()
+                } else {
+                    WelcomeScreenView()
+                }
             } else {
                 OnboardingScreen(screenState: $screenState)
             }
         case .welcomeScreen:
             if UserDefaults.standard.onBoarding {
-                WelcomeScreenView()
+                if viewModal.userSessions != nil {
+                    MainScreenView()
+                } else {
+                    WelcomeScreenView()
+                }
             } else {
                 OnboardingScreen(screenState: $screenState)
             }
@@ -41,5 +50,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(AuthViewModal())
     }
 }
