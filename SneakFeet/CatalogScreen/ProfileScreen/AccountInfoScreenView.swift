@@ -10,8 +10,6 @@ import SwiftUI
 struct AccountInfoScreenView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModal: AuthViewModal
-    @State private var changeUsername: String = ""
-    @State private var changeOldPassword: String = ""
     var body: some View {
         if let user = viewModal.currentUser {
             NavigationView {
@@ -20,7 +18,7 @@ struct AccountInfoScreenView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            TextField(user.username, text: $changeUsername)
+                            TextField(user.username, text: $viewModal.changeUsername)
                                 .padding()
                         }
                         .frame(height: 48)
@@ -28,7 +26,7 @@ struct AccountInfoScreenView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            SecureField(user.password, text: $changeOldPassword)
+                            SecureField(user.password, text: $viewModal.changeOldPassword)
                                 .padding()
                         }
                         .frame(height: 48)
@@ -36,7 +34,7 @@ struct AccountInfoScreenView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            TextField("Change password", text: $changeUsername)
+                            TextField("New password", text: $viewModal.changeNewPassword)
                                 .padding()
                         }
                         .frame(height: 48)

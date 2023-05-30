@@ -6,21 +6,21 @@
 //
 
 import SwiftUI
-
+import SDWebImageSwiftUI
 struct ListDesignView: View {
     @State var image: String = ""
     @State var title: String = ""
     @State var description: String = ""
-    @State var price: String = ""
-    @State var stepperValue: Int = 1
+    @State var price: Int = 0
+    @State var stepperValue: Int = 0
     var body: some View {
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 0)
                     .fill(Color.white)
                 HStack {
-                    Image(image)
+                    AnimatedImage(url: URL(string: image))
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 166, height: 166)
                     VStack(alignment: .leading, spacing: 4) {
                         Text(title)
                             .font(.system(size: 13, weight: .semibold))

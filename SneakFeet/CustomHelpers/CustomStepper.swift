@@ -10,13 +10,15 @@ import SwiftUI
 
 struct MyStepper: View {
     @Binding var stepperValue: Int
+    @EnvironmentObject var storeModal: StoreModal
     var `in`: ClosedRange<Int> 
 
     var body: some View {
             HStack {
                 Button("-") {
-                    if stepperValue > 0 {
+                    if stepperValue > 1 {
                         stepperValue -= 1
+                        
                     }
                 }
                 Spacer()

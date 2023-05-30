@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CatalogScreenView: View {
-    
+    @EnvironmentObject var catalogData: CatalogModalData
     let itemPerRow: CGFloat = 2
     let horizontalSpacing: CGFloat = 8
     let height: CGFloat = 282
     
-    let cards: [Card] = StoreCotolog.cards
+//    let cards: [CatalogData] = StoreCotolog.cards
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -22,7 +22,7 @@ struct CatalogScreenView: View {
                         .edgesIgnoringSafeArea(.top)
                     ScrollView {
                         VStack {
-                            ForEach(0..<cards.count) { i in
+                            ForEach(0..<catalogData.catalogData.count, id: \.self) { i in
                                 if i % Int(itemPerRow) == 0 {
                                     buildView(rowIndex: i, geometry: geometry)
                                 }
@@ -39,10 +39,10 @@ struct CatalogScreenView: View {
         }
     }
     func buildView(rowIndex: Int, geometry: GeometryProxy) -> RowView? {
-        var rowCards = [Card]()
+        var rowCards = [CatalogData]()
         for itemIndex in 0..<Int(itemPerRow) {
-            if rowIndex + itemIndex < cards.count {
-                rowCards.append(cards[rowIndex + itemIndex])
+            if rowIndex + itemIndex < catalogData.catalogData.count {
+                rowCards.append(catalogData.catalogData[rowIndex + itemIndex])
             }
         }
         if !rowCards.isEmpty {
@@ -61,5 +61,6 @@ struct CatalogScreenView: View {
 struct CatalogScreenView_Previews: PreviewProvider {
     static var previews: some View {
         CatalogScreenView()
+            .environmentObject(CatalogModalData())
     }
 }

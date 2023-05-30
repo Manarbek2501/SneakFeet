@@ -21,6 +21,7 @@ extension UserDefaults {
 struct ContentView: View {
     @State var screenState: ScreenState = .onboarding
     @EnvironmentObject var viewModal: AuthViewModal
+    @EnvironmentObject var catalogModal: CatalogModalData
     var body: some View {
         switch screenState {
         case .onboarding:
@@ -51,5 +52,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(AuthViewModal())
+            .environmentObject(CatalogModalData())
     }
 }

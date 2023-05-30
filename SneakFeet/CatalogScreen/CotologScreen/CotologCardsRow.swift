@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CotologCardsRow: View {
-    let item: Card
+    let item: CatalogData
     @EnvironmentObject var storeModal: StoreModal
+    @EnvironmentObject var catalogModal: CatalogModalData
     @State private var clicked: Bool = false
     let title: String
     let description: String
     let image: String
-    let price: String
+    let price: Int
     
     var body: some View {
         VStack {
@@ -22,19 +24,22 @@ struct CotologCardsRow: View {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.white)
                 VStack {
-                    Image(image)
+                    AnimatedImage(url: URL(string: image))
+                        .resizable()
+                        .frame(width: 166, height: 166)
+                        .cornerRadius(12)
                     VStack(alignment: .leading) {
                         Text(title)
                             .font(.system(size: 13, weight: .semibold))
                         Text(description)
                             .font(.system(size: 12, weight: .regular))
                             .foregroundColor(Color(CGColor(red: 0.557, green: 0.557, blue: 0.576, alpha: 1)))
-                        Text(price)
+                        Text("$ \(price)")
                             .font(.system(size: 12, weight: .semibold))
                         ZStack {
                             RoundedRectangle(cornerRadius: 50)
                                 .fill(clicked && !storeModal.cards.isEmpty ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
-                            Text(clicked && !storeModal.cards.isEmpty ? "Remove" : "Add to cart")
+                            Text(clicked && !storeModal.retrieveCards().isEmpty ? "Remove" : "Add to cart")
                                 .font(.system(size: 17, weight: .semibold))
                                 .foregroundColor(Color.white)
                         }
@@ -60,45 +65,13 @@ struct CotologCardsRow: View {
 
 struct CotologCardsRow_Previews: PreviewProvider {
     static var previews: some View {
-        CotologCardsRow(item: Card.init(title: "", image: "", description: "", price: ""), title: "Dolce", description: "dolce", image: "Dolce", price: "$245")
+        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120), title: "", description: "", image: "", price: 0)
             .environmentObject(StoreModal())
+            .environmentObject(CatalogModalData())
     }
 }
 
 
-struct Card: Identifiable, Equatable {
-    var id = UUID()
-    var title: String
-    var image: String
-    var description: String
-    var price: String
-}
 
-struct RowView: View {
-    let cards: [Card]
-    let width: CGFloat
-    let height: CGFloat
-    let horizontalSpacing: CGFloat
-    var body: some View {
-        HStack(spacing: horizontalSpacing) {
-            ForEach(cards) { card in
-                CotologCardsRow(item: Card.init(title: card.title, image: card.image, description: card.description, price: card.price), title: card.title, description: card.description, image: card.image, price: card.price)
-                    .frame(width: width, height: height)
-            }
-        }
-        .padding()
-    }
-}
 
-struct StoreCotolog {
-    static var cards = [
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Jordan", image: "jordan1", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Jordan", image: "jordan2", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Off-White", image: "off-white", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
-        Card(title: "Dolce & Gabbana", image: "Dolce", description: "Кеды с принтом граффити", price: "1251"),
-    ]
-}
+

@@ -17,6 +17,9 @@ protocol AuthFormProtocol {
 class AuthViewModal: ObservableObject {
     @Published var userSessions: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var changeUsername: String = ""
+    @Published var changeOldPassword: String = ""
+    @Published var changeNewPassword: String = ""
     
     init() {
         self.userSessions = Auth.auth().currentUser
@@ -24,6 +27,8 @@ class AuthViewModal: ObservableObject {
         Task {
             await fetchUser()
         }
+        
+        self.changeUsername = currentUser?.username ?? "username"
     }
     
     func signIn(username: String, password: String) async throws {
