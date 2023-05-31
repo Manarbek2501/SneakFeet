@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CartScreenView: View {
-    
+    @EnvironmentObject var storeModal: StoreModal
     var body: some View {
         NavigationView {
             ZStack {
@@ -28,6 +28,9 @@ struct CartScreenView: View {
             }
                 .navigationTitle("Cart")
                 .navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                    storeModal.savedCards = storeModal.retrieveCards()
+                }
         }
     }
 }
@@ -35,5 +38,6 @@ struct CartScreenView: View {
 struct CartScreenView_Previews: PreviewProvider {
     static var previews: some View {
         CartScreenView()
+            .environmentObject(StoreModal())
     }
 }

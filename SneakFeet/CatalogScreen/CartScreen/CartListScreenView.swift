@@ -14,7 +14,7 @@ struct CartListScreenView: View {
     var body: some View {
         if cards.retrieveCards().isEmpty {
             CartScreenView()
-        } else {
+        } else if !cards.retrieveCards().isEmpty{
             ListCartScreenView()
         }
     }
@@ -23,7 +23,7 @@ struct CartListScreenView: View {
 struct ListCartScreenView: View {
     @EnvironmentObject var cards: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
-    @State var savedCards: [CatalogData] = []
+    
     @Environment(\.dismiss) var dismiss
     @State private var showOrderAlert: Bool = false
     @State private var showBottomSheets: Bool = false
@@ -35,18 +35,23 @@ struct ListCartScreenView: View {
                     .edgesIgnoringSafeArea(.top)
                 List {
                     Section {
-                        ForEach(cards.retrieveCards()) { item in
+                        ForEach(cards.savedCards) { item in
                             ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
+//                            MyStepper.didTap = { count in
+//                                item.count = count
+//                            }
                         }
                         .onDelete(perform: delete)
                     }
-                    if !savedCards.isEmpty {
+                    if !cards.savedCards.isEmpty {
                         Section {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 0)
                                     .fill(Color.white)
                                 HStack {
-                                    Text(" items: Total (Including Delivery) ")
+                                    Text("\(cards.items.count) items: Total (Including Delivery) ")
+                                    Spacer()
+                                    Text("$235")
                                 }
                             }
                             .frame(height: 50)
@@ -59,6 +64,7 @@ struct ListCartScreenView: View {
                         .padding([.leading, .trailing], 16)
                         .onTapGesture {
                             showOrderAlert = true
+                            
                         }
                         .alert("Proceed with payment", isPresented: $showOrderAlert) {
                             Button(role: .cancel) {
@@ -86,13 +92,16 @@ struct ListCartScreenView: View {
             .navigationTitle("Cart")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-               savedCards = cards.retrieveCards()
+                cards.savedCards = cards.retrieveCards()
             }
         }
     }
     func delete(indexSet: IndexSet) {
-        savedCards.remove(atOffsets: indexSet)
-//        UserDefaults.standard.removeObject(forKey: "catalogInList")
+        cards.savedCards.remove(atOffsets: indexSet)
+        cards.saveCards(cards.savedCards)
+        if cards.savedCards.isEmpty {
+            cards.items.removeAll()
+        }
     }
     func bottomSheet() -> some View {
         Group {
@@ -103,7 +112,7 @@ struct ListCartScreenView: View {
                 ZStack {
                     VStack {
                         HStack {
-                            ForEach(savedCards) { image in
+                            ForEach(cards.savedCards) { image in
                                 ZStack {
                                     Circle()
                                         .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))

@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import SwiftUI
 
 protocol AuthFormProtocol {
     var formIsValid: Bool {get}
@@ -28,7 +29,7 @@ class AuthViewModal: ObservableObject {
             await fetchUser()
         }
         
-        self.changeUsername = currentUser?.username ?? "username"
+        self.changeOldPassword = self.currentUser?.password ?? ""
     }
     
     func signIn(username: String, password: String) async throws {
@@ -68,5 +69,50 @@ class AuthViewModal: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
+    }
+    
+    static func resetPassword(email: String, resetCompletion: @escaping (Result<Bool, Error>) -> Void) {
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            if let error = error {
+                resetCompletion(.failure(error))
+            } else {
+                resetCompletion(.success(true))
+            }
+        }
+    }
+    
+    func changePassword(newPassword: String, currentPassword: String) {
+        guard let user = Auth.auth().currentUser else {
+            // User is not signed in
+            return
+        }
+        
+        // Check if the user has a password
+        if user.providerData.isEmpty {
+            print("User does not have a password")
+            return
+        }
+        
+        let credential = EmailAuthProvider.credential(withEmail: user.email!, password: currentPassword)
+        
+        // Re-authenticate the user with their current password
+        user.reauthenticate(with: credential) { _, error in
+            if let error = error {
+                // Re-authentication failed
+                print("Reauthentication failed: \(error.localizedDescription)")
+                return
+            }
+            
+            // Re-authentication successful, update the password
+            user.updatePassword(to: newPassword) { error in
+                if let error = error {
+                    // Password update failed
+                    print("Password update failed: \(error.localizedDescription)")
+                } else {
+                    // Password updated successfully
+                    print("Password updated successfully")
+                }
+            }
+        }
     }
 }

@@ -42,6 +42,9 @@
 		4B7310682A25E6E600B40DE5 /* CatalogModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7310672A25E6E600B40DE5 /* CatalogModal.swift */; };
 		4B73106D2A26375600B40DE5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4B73106C2A26375600B40DE5 /* SDWebImageSwiftUI */; };
 		4B73106F2A26495F00B40DE5 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4B73106E2A26495F00B40DE5 /* FirebaseFirestoreSwift */; };
+		4B9D5F412A27C883001CB6E1 /* OrderHistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F402A27C883001CB6E1 /* OrderHistoryScreen.swift */; };
+		4B9D5F432A27C899001CB6E1 /* DetailOrderHistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F422A27C899001CB6E1 /* DetailOrderHistoryScreen.swift */; };
+		4B9D5F452A27D272001CB6E1 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F442A27D272001CB6E1 /* HistoryModel.swift */; };
 		4BEE21F62A2663BA0090FBBE /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE21F52A2663BA0090FBBE /* RowView.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +80,9 @@
 		4B6B36022A22401B007BFC91 /* CustomStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepper.swift; sourceTree = "<group>"; };
 		4B7310652A25E1EB00B40DE5 /* CatalogModalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogModalData.swift; sourceTree = "<group>"; };
 		4B7310672A25E6E600B40DE5 /* CatalogModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogModal.swift; sourceTree = "<group>"; };
+		4B9D5F402A27C883001CB6E1 /* OrderHistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryScreen.swift; sourceTree = "<group>"; };
+		4B9D5F422A27C899001CB6E1 /* DetailOrderHistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderHistoryScreen.swift; sourceTree = "<group>"; };
+		4B9D5F442A27D272001CB6E1 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		4BEE21F52A2663BA0090FBBE /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,6 +201,7 @@
 		4B2EC4002A1E10640090A8D4 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
+				4B9D5F3F2A27C860001CB6E1 /* OrderHistory */,
 				4B2EC3FC2A1DF8BE0090A8D4 /* ProfileScreenView.swift */,
 				4B2EC4012A1E108D0090A8D4 /* AccountInfoScreenView.swift */,
 				4B2EC4032A1E14180090A8D4 /* ShoeSizeScreenView.swift */,
@@ -207,6 +214,7 @@
 			children = (
 				4B2EC4062A1E1B8C0090A8D4 /* SneakFeetModal.swift */,
 				4B7310652A25E1EB00B40DE5 /* CatalogModalData.swift */,
+				4B9D5F442A27D272001CB6E1 /* HistoryModel.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -252,6 +260,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4B9D5F3F2A27C860001CB6E1 /* OrderHistory */ = {
+			isa = PBXGroup;
+			children = (
+				4B9D5F402A27C883001CB6E1 /* OrderHistoryScreen.swift */,
+				4B9D5F422A27C899001CB6E1 /* DetailOrderHistoryScreen.swift */,
+			);
+			path = OrderHistory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,11 +373,14 @@
 				4B7310682A25E6E600B40DE5 /* CatalogModal.swift in Sources */,
 				4B2EC4022A1E108D0090A8D4 /* AccountInfoScreenView.swift in Sources */,
 				4B2EC3E72A1B7D2D0090A8D4 /* ThirdOnboardingScreen.swift in Sources */,
+				4B9D5F452A27D272001CB6E1 /* HistoryModel.swift in Sources */,
 				4B6B35F92A21FB1A007BFC91 /* AuthViewModel.swift in Sources */,
+				4B9D5F412A27C883001CB6E1 /* OrderHistoryScreen.swift in Sources */,
 				4B2EC3EC2A1B89480090A8D4 /* CustomButton.swift in Sources */,
 				4BEE21F62A2663BA0090FBBE /* RowView.swift in Sources */,
 				4B2EC3E52A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift in Sources */,
 				4B6B35FC2A21FBED007BFC91 /* User.swift in Sources */,
+				4B9D5F432A27C899001CB6E1 /* DetailOrderHistoryScreen.swift in Sources */,
 				4B2EC3D42A1B7C980090A8D4 /* SneakFeetApp.swift in Sources */,
 				4B2EC41B2A1F3BA50090A8D4 /* ListDesignView.swift in Sources */,
 				4B2EC4112A1E4C3E0090A8D4 /* CartScreenView.swift in Sources */,

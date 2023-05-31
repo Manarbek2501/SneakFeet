@@ -22,6 +22,7 @@ struct SignUpScreen: View {
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
                         TextField("Email", text: $username)
+                            .autocapitalization(.none)
                             .padding()
                     }
                     .frame(height: 48)
@@ -30,6 +31,7 @@ struct SignUpScreen: View {
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
                         SecureField("Password", text: $password)
+                            .autocapitalization(.none)
                             .padding()
                     }
                     .frame(height: 48)
@@ -39,6 +41,7 @@ struct SignUpScreen: View {
                             .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
                         HStack {
                             SecureField("Repeat password", text: $repeatPass)
+                                .autocapitalization(.none)
                                 .padding()
                             
                             if !password.isEmpty && !repeatPass.isEmpty {

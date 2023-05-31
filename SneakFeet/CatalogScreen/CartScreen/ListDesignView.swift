@@ -14,35 +14,35 @@ struct ListDesignView: View {
     @State var price: Int = 0
     @State var stepperValue: Int = 0
     var body: some View {
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 0)
-                    .fill(Color.white)
-                HStack {
-                    AnimatedImage(url: URL(string: image))
-                        .resizable()
-                        .frame(width: 166, height: 166)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(title)
-                            .font(.system(size: 13, weight: .semibold))
-                        Text(description)
-                            .font(.system(size: 12, weight: .regular))
-                        Text("$\(price)")
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding(.top, 4)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 50)
-                                .fill(Color.black)
-                            MyStepper(stepperValue: $stepperValue, in: 1...5)
-                        }
-                        .frame(width: 166 ,height: 36)
-                        .padding(.top, 12)
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 0)
+                .fill(Color.white)
+            HStack {
+                AnimatedImage(url: URL(string: image))
+                    .resizable()
+                    .frame(width: 166, height: 166)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(description)
+                        .font(.system(size: 12, weight: .regular))
+                    Text("$\(price)")
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding(.top, 4)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 50)
+                            .fill(Color.black)
+                        MyStepper(stepperValue: $stepperValue, in: 1...5)
                     }
-                    .padding(.leading, 16)
+                    .frame(width: 166 ,height: 36)
+                    .padding(.top, 12)
                 }
-                .padding([.leading, .trailing], 16)
-                .padding([.bottom, .top], 10)
+                .padding(.leading, 16)
             }
-            .frame(height: 160)
+            .padding([.leading, .trailing], 16)
+            .padding([.bottom, .top], 10)
+        }
+        .frame(height: 160)
     }
 }
 
@@ -51,3 +51,4 @@ struct ListDesignView_Previews: PreviewProvider {
         ListDesignView()
     }
 }
+

@@ -15,7 +15,7 @@ import FirebaseFirestoreSwift
 class CatalogModalData: ObservableObject {
     
     @Published var catalogData = [CatalogData]()
-    
+
     init() {
         let db = Firestore.firestore()
         

@@ -38,7 +38,7 @@ struct CotologCardsRow: View {
                             .font(.system(size: 12, weight: .semibold))
                         ZStack {
                             RoundedRectangle(cornerRadius: 50)
-                                .fill(clicked && !storeModal.cards.isEmpty ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
+                                .fill(clicked && !storeModal.retrieveCards().isEmpty ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
                             Text(clicked && !storeModal.retrieveCards().isEmpty ? "Remove" : "Add to cart")
                                 .font(.system(size: 17, weight: .semibold))
                                 .foregroundColor(Color.white)
@@ -60,6 +60,12 @@ struct CotologCardsRow: View {
             }
             .padding([.leading, .trailing], 4)
         }
+        .onAppear {
+            loadButtonState()
+        }
+    }
+    func loadButtonState() {
+//        clicked = UserDefaults.standard.bool(forKey: "buttonClickedKey")
     }
 }
 

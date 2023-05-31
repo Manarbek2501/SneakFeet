@@ -10,15 +10,38 @@ import SwiftUI
 struct AccountInfoScreenView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModal: AuthViewModal
+    @State private var isPasswordVisible: Bool = false
+    @State private var isNewPasswordVisible: Bool = false
+    var bindingToUsername: Binding<String> {
+            Binding<String>(
+                get: { viewModal.currentUser?.username ?? "" },
+                set: { newValue in
+                    if var currentUser = viewModal.currentUser {
+                        currentUser.username = newValue
+                    }
+                }
+            )
+        }
+    var bindingToPassword: Binding<String> {
+            Binding<String>(
+                get: { viewModal.currentUser?.password ?? "" },
+                set: { newValue in
+                    if var currentUser = viewModal.currentUser {
+                        viewModal.currentUser?.password = newValue
+                    }
+                }
+            )
+        }
+    
     var body: some View {
-        if let user = viewModal.currentUser {
+//        if let user = viewModal.currentUser {
             NavigationView {
                 VStack {
                     VStack(spacing: 16) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            TextField(user.username, text: $viewModal.changeUsername)
+                            TextField("Username", text: bindingToUsername)
                                 .padding()
                         }
                         .frame(height: 48)
@@ -26,23 +49,64 @@ struct AccountInfoScreenView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            SecureField(user.password, text: $viewModal.changeOldPassword)
-                                .padding()
+                        HStack {
+                            VStack {
+                                if self.isNewPasswordVisible {
+                                    TextField("Password", text: bindingToPassword)
+                                        .autocapitalization(.none)
+                                        .padding()
+                                } else {
+                                    SecureField("Password", text: bindingToPassword)
+                                        .autocapitalization(.none)
+                                        .padding()
+                                }
+                            }
+                            Button {
+                                isNewPasswordVisible.toggle()
+                            } label: {
+                                Image(systemName: self.isNewPasswordVisible ? "eye.slash.fill" : "eye.fill")
+                                    .foregroundColor(Color.black)
+                                    
+                            }
+                            .padding()
                         }
-                        .frame(height: 48)
+                    }
+                    .frame(height: 48)
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            TextField("New password", text: $viewModal.changeNewPassword)
-                                .padding()
+                        HStack {
+                            VStack {
+                                if self.isPasswordVisible {
+                                    TextField("Password", text: $viewModal.changeNewPassword)
+                                        .autocapitalization(.none)
+                                        .padding()
+                                } else {
+                                    SecureField("Password", text: $viewModal.changeNewPassword)
+                                        .autocapitalization(.none)
+                                        .padding()
+                                }
+                            }
+                            Button {
+                                isPasswordVisible.toggle()
+                            } label: {
+                                Image(systemName: self.isPasswordVisible ? "eye.slash.fill" : "eye.fill")
+                                    .foregroundColor(Color.black)
+                                    
+                            }
+                            .padding()
                         }
-                        .frame(height: 48)
+                    }
+                    .frame(height: 48)
                     }
                     .padding(.top, 62)
                     Spacer()
                     CustomButton(title: "Save changes")
                         .padding(.bottom, 16)
+                        .onTapGesture {
+                            viewModal.changePassword(newPassword: viewModal.changeNewPassword, currentPassword: bindingToPassword.wrappedValue)
+                        }
                 }
                 .padding([.leading, .trailing], 16)
                 .navigationTitle("Account Information")
@@ -58,7 +122,7 @@ struct AccountInfoScreenView: View {
                     }
                 }
             }
-        }
+//        }
     }
 }
 

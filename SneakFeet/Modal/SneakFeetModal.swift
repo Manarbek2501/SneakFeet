@@ -9,19 +9,17 @@ import SwiftUI
 
 class StoreModal: ObservableObject {
     @Published var cards = [CatalogData]()
-    @Published var items = [CatalogData].self
-    
-//    func add(item: CatalogData) {
-//        cards.append(item)
-//        UserDefaults.standard.set(cards, forKey: "catalogInList")
-//    }
-    
+    @Published var items = [Int]()
+    @Published var cardsWithCount = [UUID : Int]()
+    @Published var savedCards: [CatalogData] = []
+    @Published var itemPrice = [Int]()
     func add(item: CatalogData) {
         var cards = retrieveCards()
         cards.append(item)
         saveCards(cards)
     }
-
+    
+    
     func saveCards(_ cards: [CatalogData]) {
         do {
             let encoder = JSONEncoder()
@@ -47,8 +45,9 @@ class StoreModal: ObservableObject {
     }
     
     func remove(item: CatalogData) {
-        if let index = cards.firstIndex(of: item) {
-            cards.remove(at: index)
+        if let index = savedCards.firstIndex(of: item) {
+            savedCards.remove(at: index)
+            saveCards(savedCards)
         }
     }
     
@@ -60,6 +59,7 @@ class StoreModal: ObservableObject {
        
        init() {
            self.shoeSizeText = UserDefaults.standard.object(forKey: "shoeSizeText") as? String ?? ""
+           self.items = UserDefaults.standard.object(forKey: "stepperItems") as? [Int] ?? []
        }
 }
 
