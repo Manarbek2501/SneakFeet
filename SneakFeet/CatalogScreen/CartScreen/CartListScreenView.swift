@@ -11,11 +11,12 @@ import SDWebImageSwiftUI
 struct CartListScreenView: View {
     @EnvironmentObject var cards: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
+    
     var body: some View {
         if cards.retrieveCards().isEmpty {
             CartScreenView()
         } else if !cards.retrieveCards().isEmpty{
-            ListCartScreenView()
+            ListCartScreenView(orderItems: HistoryModel(order: "", orderedImage: [], creationDate: "", items: "", price: "", title: [], description: [], item: [], prices: []))
         }
     }
 }
@@ -23,10 +24,13 @@ struct CartListScreenView: View {
 struct ListCartScreenView: View {
     @EnvironmentObject var cards: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
-    
+    let orderItems: HistoryModel
     @Environment(\.dismiss) var dismiss
     @State private var showOrderAlert: Bool = false
     @State private var showBottomSheets: Bool = false
+    var totalPrice: Int {
+            return cards.savedCards.reduce(0) { $0 + $1.price }
+        }
     
     var body: some View {
         NavigationView {
@@ -37,9 +41,6 @@ struct ListCartScreenView: View {
                     Section {
                         ForEach(cards.savedCards) { item in
                             ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
-//                            MyStepper.didTap = { count in
-//                                item.count = count
-//                            }
                         }
                         .onDelete(perform: delete)
                     }
@@ -51,7 +52,7 @@ struct ListCartScreenView: View {
                                 HStack {
                                     Text("\(cards.items.count) items: Total (Including Delivery) ")
                                     Spacer()
-                                    Text("$235")
+                                    Text("$\(totalPrice)")
                                 }
                             }
                             .frame(height: 50)
@@ -74,6 +75,7 @@ struct ListCartScreenView: View {
                             }
                             Button(role: .none) {
                                 showBottomSheets = true
+                                placeOrder()
                             } label: {
                                 Text("Confirm")
                             }
@@ -99,10 +101,49 @@ struct ListCartScreenView: View {
     func delete(indexSet: IndexSet) {
         cards.savedCards.remove(atOffsets: indexSet)
         cards.saveCards(cards.savedCards)
+        cards.deleteStepperItems(item: 1)
         if cards.savedCards.isEmpty {
             cards.items.removeAll()
         }
     }
+    
+    func placeOrder() {
+        let order = String(cards.savedCards.count)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let currentDate = dateFormatter.string(from: Date())
+        let items = String(cards.items.count)
+        var imageArray = [String]()
+        
+        for card in cards.savedCards {
+            let orderImage = card.image
+            imageArray.append(orderImage)
+        }
+        
+        let priceString = String(totalPrice)
+        
+        var title = [String]()
+        for card in cards.savedCards {
+            let orderTitle = card.title
+            title.append(orderTitle)
+        }
+        var description = [String]()
+        for card in cards.savedCards {
+            let orderDescription = card.description
+            description.append(orderDescription)
+        }
+        var item = ["1", "1"]
+        
+        var prices = [Int]()
+        for card in cards.savedCards {
+            let orderPrice = card.price
+            prices.append(orderPrice)
+        }
+
+        catalogModal.saveOrderHistory(order: order, orderedImage: imageArray, creationDate: currentDate, items: items, price: priceString, title: title, description: description, item: item, prices: prices)
+    }
+
+    
     func bottomSheet() -> some View {
         Group {
             ZStack {

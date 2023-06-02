@@ -9,10 +9,16 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct HistoryModel {
+struct HistoryModel: Identifiable, Equatable, Codable, Hashable{
+    var id = UUID()
     let order: String
-    let orderedImage: AnimatedImage
+    let orderedImage: [String]
     let creationDate: String
     let items: String
     let price: String
+    
+    let title: [String]
+    let description: [String]
+    let item: [String]
+    let prices: [Int]
 }

@@ -24,7 +24,14 @@ struct ProfileScreenView: View {
                         } label: {
                             BlocksInProfile(blockTitle: "Account Information")
                         }
-                        BlocksInProfile(blockTitle: "Order History")
+                        
+                        NavigationLink {
+                            OrderHistoryScreen()
+                                .navigationBarBackButtonHidden(true)
+                        } label: {
+                            BlocksInProfile(blockTitle: "Order History")
+                        }
+                        
                         NavigationLink {
                             ShoeSizeScreenView()
                                 .navigationBarBackButtonHidden(true)

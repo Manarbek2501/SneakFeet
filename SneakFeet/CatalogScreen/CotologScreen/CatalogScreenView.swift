@@ -36,6 +36,9 @@ struct CatalogScreenView: View {
             }
             .navigationTitle("Hello, Sneakerhead!")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                catalogData.catalogData.shuffle()
+            }
         }
     }
     func buildView(rowIndex: Int, geometry: GeometryProxy) -> RowView? {

@@ -45,6 +45,7 @@
 		4B9D5F412A27C883001CB6E1 /* OrderHistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F402A27C883001CB6E1 /* OrderHistoryScreen.swift */; };
 		4B9D5F432A27C899001CB6E1 /* DetailOrderHistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F422A27C899001CB6E1 /* DetailOrderHistoryScreen.swift */; };
 		4B9D5F452A27D272001CB6E1 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F442A27D272001CB6E1 /* HistoryModel.swift */; };
+		4B9D5F472A289757001CB6E1 /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D5F462A289757001CB6E1 /* OrderHistoryView.swift */; };
 		4BEE21F62A2663BA0090FBBE /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE21F52A2663BA0090FBBE /* RowView.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		4B9D5F402A27C883001CB6E1 /* OrderHistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryScreen.swift; sourceTree = "<group>"; };
 		4B9D5F422A27C899001CB6E1 /* DetailOrderHistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderHistoryScreen.swift; sourceTree = "<group>"; };
 		4B9D5F442A27D272001CB6E1 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		4B9D5F462A289757001CB6E1 /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
 		4BEE21F52A2663BA0090FBBE /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -267,6 +269,7 @@
 			children = (
 				4B9D5F402A27C883001CB6E1 /* OrderHistoryScreen.swift */,
 				4B9D5F422A27C899001CB6E1 /* DetailOrderHistoryScreen.swift */,
+				4B9D5F462A289757001CB6E1 /* OrderHistoryView.swift */,
 			);
 			path = OrderHistory;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				4B2EC3EC2A1B89480090A8D4 /* CustomButton.swift in Sources */,
 				4BEE21F62A2663BA0090FBBE /* RowView.swift in Sources */,
 				4B2EC3E52A1B7D1B0090A8D4 /* SecondOnboardingScreen.swift in Sources */,
+				4B9D5F472A289757001CB6E1 /* OrderHistoryView.swift in Sources */,
 				4B6B35FC2A21FBED007BFC91 /* User.swift in Sources */,
 				4B9D5F432A27C899001CB6E1 /* DetailOrderHistoryScreen.swift in Sources */,
 				4B2EC3D42A1B7C980090A8D4 /* SneakFeetApp.swift in Sources */,

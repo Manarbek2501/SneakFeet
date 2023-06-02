@@ -51,6 +51,21 @@ class StoreModal: ObservableObject {
         }
     }
     
+    func addStepperItems(item: Int) {
+        items.append(item)
+        saveStepperItems(items)
+    }
+    func saveStepperItems(_ item: [Int]) {
+        let defaults = UserDefaults.standard
+        defaults.set(items, forKey: "stepperItems")
+    }
+    func deleteStepperItems(item: Int) {
+        if !items.isEmpty{
+            items.removeLast()
+        }
+        saveStepperItems(items)
+    }
+    
     @Published var shoeSizeText: String {
            didSet {
                UserDefaults.standard.set(shoeSizeText, forKey: "shoeSizeText")
