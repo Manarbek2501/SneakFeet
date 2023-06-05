@@ -12,6 +12,7 @@ struct CotologCardsRow: View {
     let item: CatalogData
     @EnvironmentObject var storeModal: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
+    @EnvironmentObject var cartModel: CartModalData
     @State private var clicked: Bool = false
     let title: String
     let description: String
@@ -46,11 +47,9 @@ struct CotologCardsRow: View {
                         .onTapGesture {
                             clicked.toggle()
                             if clicked {
-                                storeModal.add(item: item)
-                                storeModal.addStepperItems(item: 1)
+                                getCartData(item: item)
                             } else {
-                                storeModal.remove(item: item)
-                                storeModal.deleteStepperItems(item: 1)
+
                             }
                         }
                         .padding([.leading, .trailing], 4)
@@ -63,13 +62,19 @@ struct CotologCardsRow: View {
             .padding([.leading, .trailing], 4)
         }
     }
+    func getCartData(item: CatalogData) {
+        let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item))
+        cartModel.saveToFirestore(cartModel: cartModelData)
+        catalogModal.items.append(item.item)
+    }
 }
 
 struct CotologCardsRow_Previews: PreviewProvider {
     static var previews: some View {
-        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120), title: "", description: "", image: "", price: 0)
+        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120, item: 0), title: "", description: "", image: "", price: 0)
             .environmentObject(StoreModal())
             .environmentObject(CatalogModalData())
+            .environmentObject(CartModalData())
     }
 }
 

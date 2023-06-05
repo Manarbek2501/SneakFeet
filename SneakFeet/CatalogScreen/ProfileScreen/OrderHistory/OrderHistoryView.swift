@@ -49,6 +49,7 @@ struct ImagesGridView: View {
     }
 }
 
+
 struct OrderHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         OrderHistoryView(image: [], order: "", date: "", items: "", price: "")

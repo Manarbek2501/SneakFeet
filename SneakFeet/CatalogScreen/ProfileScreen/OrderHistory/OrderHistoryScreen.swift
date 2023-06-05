@@ -7,21 +7,18 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FirebaseDatabase
 
 struct OrderHistoryScreen: View {
     @EnvironmentObject var orderHistory: CatalogModalData
     @Environment(\.dismiss) var dismiss
-    var array: [HistoryModel] = []
     var body: some View {
-        if orderHistory.retrieveOrder().isEmpty {
-            EmptyOrderHistoryScreen()
-        } else {
             NavigationView {
                 ZStack {
                     Color(CGColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1))
                         .edgesIgnoringSafeArea(.top)
                     List {
-                        ForEach(orderHistory.retrieveOrder()) { item in
+                        ForEach(orderHistory.orderHistoryValue) { item in
                             NavigationLink {
                                 DetailOrderHistoryScreen(navTitle: item.order, date: item.creationDate, items: item.items, price: item.price, image: item.orderedImage, title: item.title, description: item.description, item: item.item, prices: item.prices)
                                     .navigationBarBackButtonHidden(true)
@@ -34,6 +31,9 @@ struct OrderHistoryScreen: View {
                         }
                     }
                     .listStyle(.plain)
+                }
+                .onAppear {
+                    orderHistory.fetchOrderHistoryForCurrentUser()
                 }
                 .navigationTitle("Order History")
                 .navigationBarTitleDisplayMode(.inline)
@@ -49,7 +49,6 @@ struct OrderHistoryScreen: View {
                 }
             }
         }
-    }
 }
 struct EmptyOrderHistoryScreen: View {
     @Environment(\.dismiss) var dismiss

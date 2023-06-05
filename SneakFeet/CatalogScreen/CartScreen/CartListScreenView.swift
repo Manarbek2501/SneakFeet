@@ -7,15 +7,18 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Firebase
+import FirebaseDatabase
+import FirebaseFirestore
 
 struct CartListScreenView: View {
     @EnvironmentObject var cards: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
-    
+    @EnvironmentObject var cartModel: CartModalData
     var body: some View {
-        if cards.retrieveCards().isEmpty {
+        if cartModel.cartValue.isEmpty {
             CartScreenView()
-        } else if !cards.retrieveCards().isEmpty{
+        } else {
             ListCartScreenView(orderItems: HistoryModel(order: "", orderedImage: [], creationDate: "", items: "", price: "", title: [], description: [], item: [], prices: []))
         }
     }
@@ -24,14 +27,15 @@ struct CartListScreenView: View {
 struct ListCartScreenView: View {
     @EnvironmentObject var cards: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
+    @EnvironmentObject var cartModel: CartModalData
+    @EnvironmentObject var authModel: AuthViewModal
     let orderItems: HistoryModel
     @Environment(\.dismiss) var dismiss
     @State private var showOrderAlert: Bool = false
     @State private var showBottomSheets: Bool = false
     var totalPrice: Int {
-            return cards.savedCards.reduce(0) { $0 + $1.price }
-        }
-    
+        return cartModel.cartValue.reduce(0) { $0 + Int($1.price)! }
+    }
     var body: some View {
         NavigationView {
             ZStack {
@@ -39,18 +43,25 @@ struct ListCartScreenView: View {
                     .edgesIgnoringSafeArea(.top)
                 List {
                     Section {
-                        ForEach(cards.savedCards) { item in
+                        ForEach(cartModel.cartValue) { item in
                             ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
                         }
-                        .onDelete(perform: delete)
+                        .onDelete { indexSet in
+                            let cartUUIDs = indexSet.compactMap {
+                                UUID(uuidString: cartModel.cartValue[$0].id)
+                            }
+                            if let firstUUID = cartUUIDs.first {
+                                self.delete(with: firstUUID.uuidString)
+                            }
+                        }
                     }
-                    if !cards.savedCards.isEmpty {
+                    if !cartModel.cartValue.isEmpty {
                         Section {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 0)
                                     .fill(Color.white)
                                 HStack {
-                                    Text("\(cards.items.count) items: Total (Including Delivery) ")
+                                    Text("\(catalogModal.items.count) items: Total (Including Delivery) ")
                                     Spacer()
                                     Text("$\(totalPrice)")
                                 }
@@ -59,13 +70,15 @@ struct ListCartScreenView: View {
                         }
                     }
                 }
+                .onAppear {
+                    cartModel.fetchCartForCurrentUserFirestore()
+                }
                 .listStyle(.plain)
                 Group {
                     CustomButton(title: "Confirm order")
                         .padding([.leading, .trailing], 16)
                         .onTapGesture {
                             showOrderAlert = true
-                            
                         }
                         .alert("Proceed with payment", isPresented: $showOrderAlert) {
                             Button(role: .cancel) {
@@ -93,29 +106,42 @@ struct ListCartScreenView: View {
             }
             .navigationTitle("Cart")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                cards.savedCards = cards.retrieveCards()
-            }
         }
     }
-    func delete(indexSet: IndexSet) {
-        cards.savedCards.remove(atOffsets: indexSet)
-        cards.saveCards(cards.savedCards)
-        cards.deleteStepperItems(item: 1)
-        if cards.savedCards.isEmpty {
-            cards.items.removeAll()
+    func getCurrentUserID() -> String? {
+        if let user = Auth.auth().currentUser {
+            return user.uid
+        }
+        return nil
+    }
+    func delete(with id: String) {
+        guard let userID = getCurrentUserID() else {
+                print("User is not authenticated.")
+                return
+            }
+        let db = Firestore.firestore()
+        db.collection("carts").document("\(userID)").collection("cartItems").whereField("id", isEqualTo: id).getDocuments { (snap, err) in
+            if err != nil {
+                print("error")
+                return
+            }
+            for i in snap!.documents {
+                DispatchQueue.main.async {
+                    i.reference.delete()
+                }
+            }
         }
     }
     
     func placeOrder() {
-        let order = String(cards.savedCards.count)
+        let order = String(cartModel.cartValue.count)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let currentDate = dateFormatter.string(from: Date())
-        let items = String(cards.items.count)
+        let items = String(catalogModal.items.count)
         var imageArray = [String]()
         
-        for card in cards.savedCards {
+        for card in cartModel.cartValue {
             let orderImage = card.image
             imageArray.append(orderImage)
         }
@@ -123,26 +149,29 @@ struct ListCartScreenView: View {
         let priceString = String(totalPrice)
         
         var title = [String]()
-        for card in cards.savedCards {
+        for card in cartModel.cartValue {
             let orderTitle = card.title
             title.append(orderTitle)
         }
         var description = [String]()
-        for card in cards.savedCards {
+        for card in cartModel.cartValue {
             let orderDescription = card.description
             description.append(orderDescription)
         }
-        var item = ["1", "1"]
-        
-        var prices = [Int]()
-        for card in cards.savedCards {
-            let orderPrice = card.price
-            prices.append(orderPrice)
+        var stepperItem = [String]()
+        for card in cartModel.cartValue {
+            let item = card.item
+            stepperItem.append(item)
         }
-
-        catalogModal.saveOrderHistory(order: order, orderedImage: imageArray, creationDate: currentDate, items: items, price: priceString, title: title, description: description, item: item, prices: prices)
+        var prices = [Int]()
+        for card in cartModel.cartValue {
+            let orderPrice = card.price
+            prices.append(Int(orderPrice)!)
+        }
+        
+        catalogModal.saveOrderHistoryForCurrentUser(order: order, orderedImage: imageArray, creationDate: currentDate, items: items, price: priceString, title: title, description: description, item: stepperItem, prices: prices)
     }
-
+    
     
     func bottomSheet() -> some View {
         Group {
@@ -153,7 +182,7 @@ struct ListCartScreenView: View {
                 ZStack {
                     VStack {
                         HStack {
-                            ForEach(cards.savedCards) { image in
+                            ForEach(cartModel.cartValue) { image in
                                 ZStack {
                                     Circle()
                                         .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
@@ -194,5 +223,6 @@ struct CartListScreenView_Previews: PreviewProvider {
         CartListScreenView()
             .environmentObject(StoreModal())
             .environmentObject(CatalogModalData())
+            .environmentObject(CartModalData())
     }
 }

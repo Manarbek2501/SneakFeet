@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 struct SignInScreen: View {
     @State private var username: String = ""
@@ -31,9 +33,9 @@ struct SignInScreen: View {
                     }
                     .frame(height: 48)
                     
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
                         HStack {
                             VStack {
                                 if self.isPasswordVisible {
@@ -51,7 +53,7 @@ struct SignInScreen: View {
                             } label: {
                                 Image(systemName: self.isPasswordVisible ? "eye.slash.fill" : "eye.fill")
                                     .foregroundColor(Color.black)
-                                    
+                                
                             }
                             .padding()
                         }
@@ -74,7 +76,7 @@ struct SignInScreen: View {
                                         TextField("Email", text: $resetPassword).autocapitalization(.none)
                                             .keyboardType(.emailAddress)
                                             .padding()
-                                            
+                                        
                                     }
                                     .frame(height: 48)
                                     Spacer()
@@ -112,28 +114,29 @@ struct SignInScreen: View {
                             try await viewModal.signIn(username: username, password: password)
                         }
                     }
-                    .disabled(!formIsValid)
-                    .opacity(formIsValid ? 1.0 : 0.7)
             }
-            .padding([.leading, .trailing], 16)
-            .navigationTitle("Welcome back!")
-            .navigationBarTitleDisplayMode(.inline)
-            .ignoresSafeArea(.keyboard)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    withAnimation {
-                        Image(systemName: "chevron.backward")
-                            .foregroundColor(.black)
-                            .font(.system(size: 23, weight: .medium))
-                            .onTapGesture {
-                                dismiss()
-                            }
-                    }
+            .disabled(!formIsValid)
+            .opacity(formIsValid ? 1.0 : 0.7)
+        }
+        .padding([.leading, .trailing], 16)
+        .navigationTitle("Welcome back!")
+        .navigationBarTitleDisplayMode(.inline)
+        .ignoresSafeArea(.keyboard)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                withAnimation {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.black)
+                        .font(.system(size: 23, weight: .medium))
+                        .onTapGesture {
+                            dismiss()
+                        }
                 }
             }
         }
     }
 }
+
 
 extension SignInScreen: AuthFormProtocol {
     var formIsValid: Bool {

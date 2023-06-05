@@ -25,12 +25,14 @@ struct SneakFeetApp: App {
     @StateObject var storeModal: StoreModal = .init()
     @StateObject var viewModal = AuthViewModal()
     @StateObject var catalogModal: CatalogModalData = .init()
+    @StateObject var cartModel: CartModalData = .init()
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(storeModal)
                 .environmentObject(viewModal)
                 .environmentObject(catalogModal)
+                .environmentObject(cartModel)
         }
     }
 }

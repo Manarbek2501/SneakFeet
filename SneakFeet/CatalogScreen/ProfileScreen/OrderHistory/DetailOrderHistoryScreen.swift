@@ -57,9 +57,6 @@ struct DetailOrderHistoryScreen: View {
                 .padding(.top, 26)
                 .navigationTitle("Order #\(navTitle)")
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    orderHistory.savedOrder = orderHistory.retrieveOrder()
-                }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Image(systemName: "chevron.backward")

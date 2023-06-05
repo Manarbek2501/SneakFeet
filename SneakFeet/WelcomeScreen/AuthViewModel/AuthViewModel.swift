@@ -7,8 +7,10 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 import FirebaseFirestoreSwift
 import SwiftUI
+
 
 protocol AuthFormProtocol {
     var formIsValid: Bool {get}

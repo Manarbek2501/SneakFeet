@@ -11,7 +11,8 @@ struct ListDesignView: View {
     @State var image: String = ""
     @State var title: String = ""
     @State var description: String = ""
-    @State var price: Int = 0
+    @State var price: String = ""
+    @State private var stepperValue: Int = 1
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 0)
@@ -31,7 +32,7 @@ struct ListDesignView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 50)
                             .fill(Color.black)
-                        MyStepper()
+                        MyStepper(stepperValue: $stepperValue)
                     }
                     .frame(width: 166 ,height: 36)
                     .padding(.top, 12)
