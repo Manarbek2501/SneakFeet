@@ -13,6 +13,9 @@ struct OrderHistoryScreen: View {
     @EnvironmentObject var orderHistory: CatalogModalData
     @Environment(\.dismiss) var dismiss
     var body: some View {
+        if orderHistory.orderHistoryValue.isEmpty {
+            EmptyOrderHistoryScreen()
+        } else {
             NavigationView {
                 ZStack {
                     Color(CGColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1))
@@ -33,7 +36,9 @@ struct OrderHistoryScreen: View {
                     .listStyle(.plain)
                 }
                 .onAppear {
-                    orderHistory.fetchOrderHistoryForCurrentUser()
+                    Task {
+                        await fetchData()
+                    }
                 }
                 .navigationTitle("Order History")
                 .navigationBarTitleDisplayMode(.inline)
@@ -49,8 +54,13 @@ struct OrderHistoryScreen: View {
                 }
             }
         }
+    }
+    private func fetchData() async {
+        await orderHistory.fetchOrderHistoryForCurrentUser()
+    }
 }
 struct EmptyOrderHistoryScreen: View {
+    @EnvironmentObject var orderHistory: CatalogModalData
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationView {
@@ -69,6 +79,11 @@ struct EmptyOrderHistoryScreen: View {
                     Spacer()
                 }
             }
+            .onAppear {
+                Task {
+                    await fetchData()
+                }
+            }
             .navigationTitle("Order History")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -82,6 +97,9 @@ struct EmptyOrderHistoryScreen: View {
                 }
             }
         }
+    }
+    private func fetchData() async {
+        await orderHistory.fetchOrderHistoryForCurrentUser()
     }
 }
 struct OrderHistoryScreen_Previews: PreviewProvider {

@@ -39,11 +39,13 @@ struct ImagesGridView: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            ForEach(images, id: \.self) { image in
-                AnimatedImage(url: URL(string: image))
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .cornerRadius(12)
+            ForEach(Array(images.enumerated()), id: \.element) { index, image in
+                if index == 0 || index == 1 {
+                    AnimatedImage(url: URL(string: image))
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .cornerRadius(12)
+                }
             }
         }
     }

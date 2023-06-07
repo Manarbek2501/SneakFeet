@@ -10,9 +10,10 @@ import SwiftUI
 import SDWebImageSwiftUI
 import Firebase
 import FirebaseDatabase
+import FirebaseFirestoreSwift
 
 struct CartModel: Identifiable, Equatable, Codable, Hashable{
-    var id: String = UUID().uuidString
+    var id: String? = UUID().uuidString
     let title: String
     let image: String
     let description: String

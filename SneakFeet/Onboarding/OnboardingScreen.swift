@@ -18,42 +18,44 @@ struct OnboardingScreen: View {
                     ThirdOnboardingScreen().tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                ZStack{
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.3)))
-                        .frame(height: 288)
-                    VStack {
-                        dotIndicators
-                        .padding(.top, 32)
-                        Text("Fast shipping")
-                            .font(.system(size: 28, weight: .semibold))
-                            .foregroundColor(Color.white)
-                            .padding(.top, 30)
-                        Text("Get all of your desired sneakers in one place.")
-                            .font(.system(size: 17, weight: .regular))
-                            .foregroundColor(Color.white)
-                            .padding(.bottom, 24)
-                            .padding(.top, 5)
-                        CustomButton(title: selectedTab == 2 ? "Finish" : "Next")
-                            .onTapGesture {
-                                withAnimation {
-                                    if selectedTab == 0 {
-                                        selectedTab = 1
-                                    } else if selectedTab == 1 {
-                                        selectedTab = 2
-                                    } else if selectedTab == 2 {
-                                        screenState = .welcomeScreen
+                Group {
+                    ZStack(alignment: .bottom){
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.3)))
+                            .frame(height: 288)
+                        VStack {
+                            dotIndicators
+                                .padding(.top, 32)
+                            Text("Fast shipping")
+                                .font(.system(size: 28, weight: .semibold))
+                                .foregroundColor(Color.white)
+                                .padding(.top, 30)
+                            Text("Get all of your desired sneakers in one place.")
+                                .font(.system(size: 17, weight: .regular))
+                                .foregroundColor(Color.white)
+                                .padding(.bottom, 24)
+                                .padding(.top, 5)
+                            CustomButton(title: selectedTab == 2 ? "Finish" : "Next")
+                                .onTapGesture {
+                                    withAnimation {
+                                        if selectedTab == 0 {
+                                            selectedTab = 1
+                                        } else if selectedTab == 1 {
+                                            selectedTab = 2
+                                        } else if selectedTab == 2 {
+                                            screenState = .welcomeScreen
+                                        }
+                                        UserDefaults.standard.onBoarding = true
                                     }
-                                    UserDefaults.standard.onBoarding = true
                                 }
-                            }
-                            .padding(.bottom, 58)
+                                .padding(.bottom, 58)
+                        }
+                        .padding([.leading, .trailing], 16)
                     }
-                    .padding([.leading, .trailing], 16)
                 }
-                .padding(.top, 565)
+                .frame(maxHeight: .infinity, alignment: .bottom)
             }
-            .ignoresSafeArea()
+            .edgesIgnoringSafeArea(.all)
     }
     
     var dotIndicators: some View {

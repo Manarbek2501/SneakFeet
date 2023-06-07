@@ -49,7 +49,7 @@ struct CotologCardsRow: View {
                             if clicked {
                                 getCartData(item: item)
                             } else {
-
+                                
                             }
                         }
                         .padding([.leading, .trailing], 4)
@@ -65,7 +65,6 @@ struct CotologCardsRow: View {
     func getCartData(item: CatalogData) {
         let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item))
         cartModel.saveToFirestore(cartModel: cartModelData)
-        catalogModal.items.append(item.item)
     }
 }
 

@@ -19,6 +19,7 @@ struct SignInScreen: View {
     @State private var showBottomSheet: Bool = false
     @State private var errorString: String?
     @State private var showAlert: Bool = false
+    @State private var showSignInAlert: Bool = false
     @State private var isPasswordVisible: Bool = false
     var body: some View {
         NavigationView {
@@ -95,7 +96,6 @@ struct SignInScreen: View {
                                         }
                                         .alert(isPresented: $showAlert) {
                                             Alert(title: Text("Password Reset"), message: Text(self.errorString ?? "Success. Reset email sent successfully. Check your email"), dismissButton: .default(Text("OK")))
-                                            
                                         }
                                         .ignoresSafeArea(.keyboard)
                                 }
@@ -113,10 +113,18 @@ struct SignInScreen: View {
                         Task {
                             try await viewModal.signIn(username: username, password: password)
                         }
+                        self.showSignInAlert = true
                     }
+                    .disabled(!formIsValid)
+                    .opacity(formIsValid ? 1.0 : 0.7)
+                    .alert(isPresented: $showSignInAlert) {
+                        Alert(title: Text("Attension"), message: Text(viewModal.error ?? "Welcome to Sneaker Store App"), dismissButton: .default(Text("OK")))
+                    }
+                    .onChange(of: viewModal.error) { error in
+                        showSignInAlert = (error != nil)
+                        }
+                    .ignoresSafeArea(.keyboard)
             }
-            .disabled(!formIsValid)
-            .opacity(formIsValid ? 1.0 : 0.7)
         }
         .padding([.leading, .trailing], 16)
         .navigationTitle("Welcome back!")

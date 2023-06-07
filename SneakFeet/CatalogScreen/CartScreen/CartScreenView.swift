@@ -26,12 +26,17 @@ struct CartScreenView: View {
                     Spacer()
                 }
             }
+            .onAppear() {
+                Task {
+                    await fetchData()
+                }
+            }
                 .navigationTitle("Cart")
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    cartModel.fetchCartForCurrentUserFirestore()
-                }
         }
+    }
+    func fetchData() async {
+        await cartModel.fetchCartForCurrentUserFirestore()
     }
 }
 

@@ -12,6 +12,8 @@ struct AccountInfoScreenView: View {
     @EnvironmentObject var viewModal: AuthViewModal
     @State private var isPasswordVisible: Bool = false
     @State private var isNewPasswordVisible: Bool = false
+    @State private var isShowingAlert: Bool = false
+    
     var bindingToUsername: Binding<String> {
             Binding<String>(
                 get: { viewModal.currentUser?.username ?? "" },
@@ -27,14 +29,13 @@ struct AccountInfoScreenView: View {
                 get: { viewModal.currentUser?.password ?? "" },
                 set: { newValue in
                     if var currentUser = viewModal.currentUser {
-                        viewModal.currentUser?.password = newValue
+                        currentUser.password = newValue
                     }
                 }
             )
         }
     
     var body: some View {
-//        if let user = viewModal.currentUser {
             NavigationView {
                 VStack {
                     VStack(spacing: 16) {
@@ -56,7 +57,7 @@ struct AccountInfoScreenView: View {
                                         .autocapitalization(.none)
                                         .padding()
                                 } else {
-                                    SecureField("Password", text: bindingToPassword)
+                                    SecureField("Password", text: $viewModal.changeOldPassword)
                                         .autocapitalization(.none)
                                         .padding()
                                 }
@@ -66,7 +67,6 @@ struct AccountInfoScreenView: View {
                             } label: {
                                 Image(systemName: self.isNewPasswordVisible ? "eye.slash.fill" : "eye.fill")
                                     .foregroundColor(Color.black)
-                                    
                             }
                             .padding()
                         }
@@ -105,7 +105,21 @@ struct AccountInfoScreenView: View {
                     CustomButton(title: "Save changes")
                         .padding(.bottom, 16)
                         .onTapGesture {
-                            viewModal.changePassword(newPassword: viewModal.changeNewPassword, currentPassword: bindingToPassword.wrappedValue)
+                            viewModal.changePassword(newPassword: viewModal.changeNewPassword, currentPassword: viewModal.changeOldPassword)
+                            viewModal.changeOldPassword = ""
+                            viewModal.changeNewPassword = ""
+                            isShowingAlert = true
+                        }
+                        .disabled(!formIsValid)
+                        .opacity(formIsValid ? 1.0 : 0.7)
+                        .alert(isPresented: $isShowingAlert) {
+                            Alert(
+                                title: Text("Attention"),
+                                message: Text(viewModal.alertText),
+                                dismissButton: .default(Text("OK")) {
+                                    dismiss()
+                                }
+                            )
                         }
                 }
                 .padding([.leading, .trailing], 16)
@@ -122,7 +136,15 @@ struct AccountInfoScreenView: View {
                     }
                 }
             }
-//        }
+    }
+
+}
+extension AccountInfoScreenView: AuthFormProtocol {
+    var formIsValid: Bool {
+        return !viewModal.changeOldPassword.isEmpty
+        && !viewModal.changeNewPassword.isEmpty
+        && viewModal.changeNewPassword.count > 5
+        && viewModal.changeOldPassword != viewModal.changeNewPassword
     }
 }
 

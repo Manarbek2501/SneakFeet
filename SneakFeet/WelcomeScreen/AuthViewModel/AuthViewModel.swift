@@ -23,6 +23,8 @@ class AuthViewModal: ObservableObject {
     @Published var changeUsername: String = ""
     @Published var changeOldPassword: String = ""
     @Published var changeNewPassword: String = ""
+    @Published var error: String?
+    @Published var alertText: String = ""
     
     init() {
         self.userSessions = Auth.auth().currentUser
@@ -40,6 +42,7 @@ class AuthViewModal: ObservableObject {
             self.userSessions = result.user
             await fetchUser()
         } catch {
+            self.error = error.localizedDescription
             print("DEBUG: printed with erroe \(error.localizedDescription)")
         }
     }
@@ -84,35 +87,45 @@ class AuthViewModal: ObservableObject {
     }
     
     func changePassword(newPassword: String, currentPassword: String) {
-        guard let user = Auth.auth().currentUser else {
-            // User is not signed in
+        // Make sure the user is authenticated
+        guard let currentUser = Auth.auth().currentUser else {
+            // User is not authenticated, handle the error
             return
         }
         
-        // Check if the user has a password
-        if user.providerData.isEmpty {
-            print("User does not have a password")
-            return
-        }
-        
-        let credential = EmailAuthProvider.credential(withEmail: user.email!, password: currentPassword)
-        
-        // Re-authenticate the user with their current password
-        user.reauthenticate(with: credential) { _, error in
+        // Reauthenticate the user with their current password
+        let credential = EmailAuthProvider.credential(withEmail: currentUser.email ?? "", password: currentPassword)
+        currentUser.reauthenticate(with: credential) { [weak self] authResult, error in
             if let error = error {
-                // Re-authentication failed
+                // Reauthentication failed, handle the error
                 print("Reauthentication failed: \(error.localizedDescription)")
+                self?.alertText = "\(error.localizedDescription)"
                 return
             }
             
-            // Re-authentication successful, update the password
-            user.updatePassword(to: newPassword) { error in
+            // Reauthentication succeeded, update the password
+            currentUser.updatePassword(to: newPassword) { [weak self] error in
                 if let error = error {
-                    // Password update failed
+                    // Password update failed, handle the error
                     print("Password update failed: \(error.localizedDescription)")
+                    self?.alertText = "\(error.localizedDescription)"
                 } else {
                     // Password updated successfully
-                    print("Password updated successfully")
+                    print("Password updated successfully!")
+                    self?.alertText = "Password updated successfully!"
+                    // Update the password in Firestore
+                    let db = Firestore.firestore()
+                    let userRef = db.collection("users").document(currentUser.uid)
+                    
+                    userRef.updateData(["password": newPassword]) { error in
+                        if let error = error {
+                            // Firestore update failed, handle the error
+                            print("Firestore update failed: \(error.localizedDescription)")
+                        } else {
+                            // Firestore update succeeded
+                            print("Firestore update successful!")
+                        }
+                    }
                 }
             }
         }

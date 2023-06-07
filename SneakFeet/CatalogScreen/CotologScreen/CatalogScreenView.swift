@@ -13,7 +13,6 @@ struct CatalogScreenView: View {
     let horizontalSpacing: CGFloat = 8
     let height: CGFloat = 282
     
-//    let cards: [CatalogData] = StoreCotolog.cards
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -45,7 +44,8 @@ struct CatalogScreenView: View {
         var rowCards = [CatalogData]()
         for itemIndex in 0..<Int(itemPerRow) {
             if rowIndex + itemIndex < catalogData.catalogData.count {
-                rowCards.append(catalogData.catalogData[rowIndex + itemIndex])
+                var catalogItem = catalogData.catalogData[rowIndex + itemIndex]
+                rowCards.append(catalogItem)
             }
         }
         if !rowCards.isEmpty {

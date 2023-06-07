@@ -36,68 +36,71 @@ struct ListCartScreenView: View {
     var totalPrice: Int {
         return cartModel.cartValue.reduce(0) { $0 + Int($1.price)! }
     }
+    var totalItems: Int {
+        return cartModel.cartValue.reduce(0) { $0 + Int($1.item)! }
+    }
     var body: some View {
         NavigationView {
             ZStack {
                 Color(CGColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1))
                     .edgesIgnoringSafeArea(.top)
-                List {
-                    Section {
-                        ForEach(cartModel.cartValue) { item in
-                            ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
-                        }
-                        .onDelete { indexSet in
-                            let cartUUIDs = indexSet.compactMap {
-                                UUID(uuidString: cartModel.cartValue[$0].id)
-                            }
-                            if let firstUUID = cartUUIDs.first {
-                                self.delete(with: firstUUID.uuidString)
-                            }
-                        }
-                    }
-                    if !cartModel.cartValue.isEmpty {
+                VStack {
+                    List {
                         Section {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 0)
-                                    .fill(Color.white)
-                                HStack {
-                                    Text("\(catalogModal.items.count) items: Total (Including Delivery) ")
-                                    Spacer()
-                                    Text("$\(totalPrice)")
+                            ForEach(cartModel.cartValue) { item in
+                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
+                            }
+                            .onDelete { indices in
+                                let cartItemsToDelete = indices.map { cartModel.cartValue[$0] }
+                                for cartItem in cartItemsToDelete {
+                                    cartModel.deleteCartItem(cartItem: cartItem)
                                 }
                             }
-                            .frame(height: 50)
+                        }
+                        if !cartModel.cartValue.isEmpty {
+                            Section {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 0)
+                                        .fill(Color.white)
+                                    HStack {
+                                        Text("\(totalItems) items: Total (Including Delivery) ")
+                                        Spacer()
+                                        Text("$\(totalPrice)")
+                                    }
+                                }
+                                .frame(height: 50)
+                            }
                         }
                     }
-                }
-                .onAppear {
-                    cartModel.fetchCartForCurrentUserFirestore()
-                }
-                .listStyle(.plain)
-                Group {
+                    .onAppear() {
+                        Task {
+                            await fetchData()
+                        }
+                    }
+                    .listStyle(.plain)
                     CustomButton(title: "Confirm order")
                         .padding([.leading, .trailing], 16)
+                        .padding(.bottom, 23)
                         .onTapGesture {
                             showOrderAlert = true
                         }
-                        .alert("Proceed with payment", isPresented: $showOrderAlert) {
-                            Button(role: .cancel) {
-                                showOrderAlert = false
-                            } label: {
-                                Text("Cancel")
-                            }
-                            Button(role: .none) {
-                                showBottomSheets = true
-                                placeOrder()
-                            } label: {
-                                Text("Confirm")
-                            }
-                        } message: {
-                            Text("Are you sure you want to confirm?")
-                        }
                 }
-                .padding(.bottom, 13)
-                .frame(maxHeight: .infinity, alignment: .bottom)
+                .alert("Proceed with payment", isPresented: $showOrderAlert) {
+                    Button(role: .cancel) {
+                        showOrderAlert = false
+                    } label: {
+                        Text("Cancel")
+                    }
+                    Button(role: .none) {
+                        showBottomSheets = true
+                        placeOrder()
+                    } label: {
+                        Text("Confirm")
+                    }
+                } message: {
+                    Text("Are you sure you want to confirm?")
+                }
+                
                 .sheet(isPresented: $showBottomSheets) {
                     bottomSheet()
                         .presentationDetents([.medium, .height(505)])
@@ -108,29 +111,8 @@ struct ListCartScreenView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    func getCurrentUserID() -> String? {
-        if let user = Auth.auth().currentUser {
-            return user.uid
-        }
-        return nil
-    }
-    func delete(with id: String) {
-        guard let userID = getCurrentUserID() else {
-                print("User is not authenticated.")
-                return
-            }
-        let db = Firestore.firestore()
-        db.collection("carts").document("\(userID)").collection("cartItems").whereField("id", isEqualTo: id).getDocuments { (snap, err) in
-            if err != nil {
-                print("error")
-                return
-            }
-            for i in snap!.documents {
-                DispatchQueue.main.async {
-                    i.reference.delete()
-                }
-            }
-        }
+    func fetchData() async {
+        await cartModel.fetchCartForCurrentUserFirestore()
     }
     
     func placeOrder() {
@@ -138,7 +120,7 @@ struct ListCartScreenView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let currentDate = dateFormatter.string(from: Date())
-        let items = String(catalogModal.items.count)
+        let items = String(totalItems)
         var imageArray = [String]()
         
         for card in cartModel.cartValue {
@@ -182,15 +164,17 @@ struct ListCartScreenView: View {
                 ZStack {
                     VStack {
                         HStack {
-                            ForEach(cartModel.cartValue) { image in
+                            ForEach(Array(cartModel.cartValue.enumerated()), id: \.element) { index, image in
                                 ZStack {
-                                    Circle()
-                                        .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                                        .frame(width: 150, height: 150)
-                                    AnimatedImage(url: URL(string: image.image))
-                                        .resizable()
-                                        .frame(width: 115, height: 115)
-                                        .cornerRadius(15)
+                                    if index == 0 || index == 1 {
+                                        Circle()
+                                            .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
+                                            .frame(width: 150, height: 150)
+                                        AnimatedImage(url: URL(string: image.image))
+                                            .resizable()
+                                            .frame(width: 115, height: 115)
+                                            .cornerRadius(15)
+                                    }
                                 }
                             }
                         }

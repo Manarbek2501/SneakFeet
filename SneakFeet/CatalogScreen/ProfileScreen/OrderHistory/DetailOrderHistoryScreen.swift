@@ -87,7 +87,7 @@ struct DetailView: View {
                 let image = image[index]
                 let title = title[index]
                 let description = description[index]
-//                let item = items[index]
+                let item = items[index]
                 let price = price[index]
                 
                 ZStack {
@@ -103,7 +103,7 @@ struct DetailView: View {
                             Text(description)
                                 .font(.system(size: 12, weight: .regular))
                                 .foregroundColor(Color(CGColor(red: 0.557, green: 0.557, blue: 0.576, alpha: 1)))
-                            Text("\("item") • $\(price)")
+                            Text("\(item) • $\(price)")
                                 .font(.system(size: 12, weight: .semibold))
                         }
                         .padding(.leading)

@@ -16,7 +16,33 @@ class CatalogModalData: ObservableObject {
     
     @Published var catalogData = [CatalogData]()
     @Published var orderHistoryValue: [HistoryModel] = []
-    @Published var items: [Int] = []
+    
+    init() {
+        let db = Firestore.firestore()
+        
+        db.collection("catalogView").getDocuments { (snap, error) in
+            
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            
+            for catalogCards in snap!.documents {
+                let id = catalogCards.documentID
+                let title = catalogCards.get("title") as! String
+                let description = catalogCards.get("description") as? String
+                let image = catalogCards.get("image") as! String
+                let price = catalogCards.get("price") as! Int
+                
+                self.catalogData.append(CatalogData(title: title, description: description ?? "Description", image: image, price: price, item: 1))
+                
+            }
+            
+        }
+        Task {
+            await fetchOrderHistoryForCurrentUser()
+        }
+    }
     
     func saveOrderHistoryForUser(userID: String, order: String, orderedImage: [String], creationDate: String, items: String, price: String, title: [String], description: [String], item: [String], prices: [Int]) {
         let historyItem = HistoryModel(order: order, orderedImage: orderedImage, creationDate: creationDate, items: items, price: price, title: title, description: description, item: item, prices: prices)
@@ -77,12 +103,11 @@ class CatalogModalData: ObservableObject {
                     }
                 }
             }
-            
             completion(orderHistory)
         }
     }
 
-    func fetchOrderHistoryForCurrentUser() {
+    func fetchOrderHistoryForCurrentUser() async {
         if let userID = getCurrentUserID() {
             fetchOrderHistoryForUser(userID: userID) { history in
                 self.orderHistoryValue = history
@@ -92,27 +117,5 @@ class CatalogModalData: ObservableObject {
         }
     }
     
-    init() {
-        let db = Firestore.firestore()
-        
-        db.collection("catalogView").getDocuments { (snap, error) in
-            
-            if error != nil {
-                print((error?.localizedDescription)!)
-                return
-            }
-            
-            for catalogCards in snap!.documents {
-                let id = catalogCards.documentID
-                let title = catalogCards.get("title") as! String
-                let description = catalogCards.get("description") as? String
-                let image = catalogCards.get("image") as! String
-                let price = catalogCards.get("price") as! Int
-                
-                self.catalogData.append(CatalogData(title: title, description: description ?? "description", image: image, price: price, item: 1))
-                
-            }
-            
-        }
-    }
+    
 }

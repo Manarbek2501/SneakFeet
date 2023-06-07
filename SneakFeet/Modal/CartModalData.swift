@@ -13,17 +13,22 @@ import FirebaseDatabase
 class CartModalData: ObservableObject {
     
     @Published var cartValue = [CartModel]()
+    @Published var stepperValues: [Int] = []
     
     let currentUserID: String
     
     init() {
         currentUserID = Auth.auth().currentUser?.uid ?? ""
+        
+        Task {
+            await fetchCartForCurrentUserFirestore()
+        }
     }
     
     func getCurrentUserID() -> String? {
         return Auth.auth().currentUser?.uid
     }
-
+    
     func saveToFirestore(cartModel: CartModel) {
         guard let userID = Auth.auth().currentUser?.uid else {
             print("User is not authenticated.")
@@ -35,14 +40,13 @@ class CartModalData: ObservableObject {
         
         do {
             let data = try JSONEncoder().encode(cartModel)
-            let documentRef = userCartCollection.document() // Automatically generates a unique document ID
+            let documentRef = userCartCollection.document()
             try documentRef.setData(from: cartModel)
         } catch {
             print("Error encoding cart model: \(error)")
         }
     }
     
-
     func fetchFromFirestoreData(userID: String, completion: @escaping ([CartModel]) -> Void) {
         let db = Firestore.firestore()
         let userCartCollection = db.collection("carts").document(userID).collection("cartItems")
@@ -68,8 +72,8 @@ class CartModalData: ObservableObject {
             completion(cartData)
         }
     }
-
-    func fetchCartForCurrentUserFirestore() {
+    
+    func fetchCartForCurrentUserFirestore() async {
         if let userID = getCurrentUserID() {
             fetchFromFirestoreData(userID: userID) { cart in
                 self.cartValue = cart
@@ -78,6 +82,26 @@ class CartModalData: ObservableObject {
             print("User is not authenticated.")
         }
     }
-
-
+    
+    func deleteCartItem(cartItem: CartModel) {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("User is not authenticated.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userCartCollection = db.collection("carts").document(userID).collection("cartItems")
+        guard let cartItemID = cartItem.id else {
+            print("Invalid cart item ID.")
+            return
+        }
+        
+        userCartCollection.document(cartItemID).delete { error in
+            if let error = error {
+                print("Error deleting cart item: \(error)")
+            } else {
+                print("Cart item deleted successfully.")
+            }
+        }
+    }
 }
