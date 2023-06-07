@@ -13,11 +13,11 @@ struct CotologCardsRow: View {
     @EnvironmentObject var storeModal: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
     @EnvironmentObject var cartModel: CartModalData
-    @State private var clicked: Bool = false
     let title: String
     let description: String
     let image: String
     let price: Int
+    @State var isSelected: Bool
     
     var body: some View {
         VStack {
@@ -39,14 +39,14 @@ struct CotologCardsRow: View {
                             .font(.system(size: 12, weight: .semibold))
                         ZStack {
                             RoundedRectangle(cornerRadius: 50)
-                                .fill(clicked ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
-                            Text(clicked ? "Remove" : "Add to cart")
+                                .fill(isSelected ? Color(CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)) : Color.black)
+                            Text(isSelected ? "Remove" : "Add to cart")
                                 .font(.system(size: 17, weight: .semibold))
                                 .foregroundColor(Color.white)
                         }
                         .onTapGesture {
-                            clicked.toggle()
-                            if clicked {
+                            self.isSelected.toggle()
+                            if isSelected {
                                 getCartData(item: item)
                             } else {
                                 
@@ -63,14 +63,14 @@ struct CotologCardsRow: View {
         }
     }
     func getCartData(item: CatalogData) {
-        let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item))
-        cartModel.saveToFirestore(cartModel: cartModelData)
+        let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item), clicked: item.clicked)
+            cartModel.saveToFirestore(cartModel: cartModelData)
     }
 }
 
 struct CotologCardsRow_Previews: PreviewProvider {
     static var previews: some View {
-        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120, item: 0), title: "", description: "", image: "", price: 0)
+        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120, item: 0, clicked: false), title: "", description: "", image: "", price: 0, isSelected: false)
             .environmentObject(StoreModal())
             .environmentObject(CatalogModalData())
             .environmentObject(CartModalData())

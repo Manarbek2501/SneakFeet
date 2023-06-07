@@ -87,42 +87,33 @@ class AuthViewModal: ObservableObject {
     }
     
     func changePassword(newPassword: String, currentPassword: String) {
-        // Make sure the user is authenticated
         guard let currentUser = Auth.auth().currentUser else {
-            // User is not authenticated, handle the error
             return
         }
-        
-        // Reauthenticate the user with their current password
         let credential = EmailAuthProvider.credential(withEmail: currentUser.email ?? "", password: currentPassword)
         currentUser.reauthenticate(with: credential) { [weak self] authResult, error in
             if let error = error {
-                // Reauthentication failed, handle the error
                 print("Reauthentication failed: \(error.localizedDescription)")
                 self?.alertText = "\(error.localizedDescription)"
                 return
             }
             
-            // Reauthentication succeeded, update the password
             currentUser.updatePassword(to: newPassword) { [weak self] error in
                 if let error = error {
-                    // Password update failed, handle the error
                     print("Password update failed: \(error.localizedDescription)")
                     self?.alertText = "\(error.localizedDescription)"
                 } else {
-                    // Password updated successfully
+                    
                     print("Password updated successfully!")
                     self?.alertText = "Password updated successfully!"
-                    // Update the password in Firestore
+                    
                     let db = Firestore.firestore()
                     let userRef = db.collection("users").document(currentUser.uid)
                     
                     userRef.updateData(["password": newPassword]) { error in
                         if let error = error {
-                            // Firestore update failed, handle the error
                             print("Firestore update failed: \(error.localizedDescription)")
                         } else {
-                            // Firestore update succeeded
                             print("Firestore update successful!")
                         }
                     }

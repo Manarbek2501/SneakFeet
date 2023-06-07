@@ -24,16 +24,6 @@ struct AccountInfoScreenView: View {
                 }
             )
         }
-    var bindingToPassword: Binding<String> {
-            Binding<String>(
-                get: { viewModal.currentUser?.password ?? "" },
-                set: { newValue in
-                    if var currentUser = viewModal.currentUser {
-                        currentUser.password = newValue
-                    }
-                }
-            )
-        }
     
     var body: some View {
             NavigationView {
@@ -53,7 +43,7 @@ struct AccountInfoScreenView: View {
                         HStack {
                             VStack {
                                 if self.isNewPasswordVisible {
-                                    TextField("Password", text: bindingToPassword)
+                                    TextField("Password", text: $viewModal.changeOldPassword)
                                         .autocapitalization(.none)
                                         .padding()
                                 } else {

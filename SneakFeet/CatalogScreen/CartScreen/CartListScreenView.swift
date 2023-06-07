@@ -39,6 +39,7 @@ struct ListCartScreenView: View {
     var totalItems: Int {
         return cartModel.cartValue.reduce(0) { $0 + Int($1.item)! }
     }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -47,14 +48,11 @@ struct ListCartScreenView: View {
                 VStack {
                     List {
                         Section {
-                            ForEach(cartModel.cartValue) { item in
+                            ForEach(cartModel.cartValue, id: \.id) { item in
                                 ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
                             }
                             .onDelete { indices in
-                                let cartItemsToDelete = indices.map { cartModel.cartValue[$0] }
-                                for cartItem in cartItemsToDelete {
-                                    cartModel.deleteCartItem(cartItem: cartItem)
-                                }
+                                cartModel.deleteFromCart(indices: indices)
                             }
                         }
                         if !cartModel.cartValue.isEmpty {
@@ -114,6 +112,7 @@ struct ListCartScreenView: View {
     func fetchData() async {
         await cartModel.fetchCartForCurrentUserFirestore()
     }
+    
     
     func placeOrder() {
         let order = String(cartModel.cartValue.count)

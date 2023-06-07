@@ -19,16 +19,18 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
     let description: String
     let price: String
     let item: String
+    let clicked: Bool
     
     enum CodingKeys: String, CodingKey {
-        case id, title, image, description, price, item
+        case id, title, image, description, price, item, clicked
     }
-    init(title: String, image: String, description: String, price: String, item: String) {
+    init(title: String, image: String, description: String, price: String, item: String, clicked: Bool) {
         self.title = title
         self.image = image
         self.description = description
         self.price = price
         self.item = item
+        self.clicked = clicked
     }
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -37,6 +39,7 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
         self.description = try container.decode(String.self, forKey: .description)
         self.price = try container.decode(String.self, forKey: .price)
         self.item = try container.decode(String.self, forKey: .item)
+        self.clicked = try container.decode(Bool.self, forKey: .clicked)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -46,6 +49,7 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
         try container.encode(description, forKey: .description)
         try container.encode(price, forKey: .price)
         try container.encode(item, forKey: .item)
+        try container.encode(clicked, forKey: .clicked)
     }
 }
 

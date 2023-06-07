@@ -14,6 +14,7 @@ struct CatalogData: Identifiable, Equatable, Codable {
     var image: String
     var price: Int
     var item: Int
+    var clicked: Bool
 }
 extension CatalogData {
     func toCartModel() -> CartModel {
@@ -22,7 +23,8 @@ extension CatalogData {
             image: self.image,
             description: self.description,
             price: String(self.price),
-            item: "1"
+            item: "1",
+            clicked: self.clicked
         )
     }
 }

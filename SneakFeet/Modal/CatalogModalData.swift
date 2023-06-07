@@ -34,7 +34,7 @@ class CatalogModalData: ObservableObject {
                 let image = catalogCards.get("image") as! String
                 let price = catalogCards.get("price") as! Int
                 
-                self.catalogData.append(CatalogData(title: title, description: description ?? "Description", image: image, price: price, item: 1))
+                self.catalogData.append(CatalogData(title: title, description: description ?? "Description", image: image, price: price, item: 1, clicked: false))
                 
             }
             

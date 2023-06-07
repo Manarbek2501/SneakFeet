@@ -83,25 +83,31 @@ class CartModalData: ObservableObject {
         }
     }
     
-    func deleteCartItem(cartItem: CartModel) {
-        guard let userID = Auth.auth().currentUser?.uid else {
-            print("User is not authenticated.")
-            return
-        }
-        
-        let db = Firestore.firestore()
-        let userCartCollection = db.collection("carts").document(userID).collection("cartItems")
-        guard let cartItemID = cartItem.id else {
-            print("Invalid cart item ID.")
-            return
-        }
-        
-        userCartCollection.document(cartItemID).delete { error in
-            if let error = error {
-                print("Error deleting cart item: \(error)")
-            } else {
-                print("Cart item deleted successfully.")
+    func deleteFromCart(indices: IndexSet) {
+        let itemsToDelete = indices.map { cartValue[$0] }
+        for (index, item) in itemsToDelete.enumerated() {
+            guard let documentID = item.id else { continue }
+            guard let userID = Auth.auth().currentUser?.uid else { return }
+            let documentRef = Firestore.firestore()
+                .collection("carts")
+                .document(userID)
+                .collection("cartItems")
+
+            documentRef.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting documents: \(error.localizedDescription)")
+                    return
+                }
+
+                guard let documents = querySnapshot?.documents else {
+                    return
+                }
+
+                let selectedDocument = documents[index]
+                let selectedDocumentID = selectedDocument.documentID
+                documentRef.document(selectedDocumentID).delete()
             }
         }
+        cartValue.remove(atOffsets: indices)
     }
 }
