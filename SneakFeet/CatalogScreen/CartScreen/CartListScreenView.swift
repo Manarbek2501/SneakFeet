@@ -50,7 +50,7 @@ struct ListCartScreenView: View {
                     List {
                         Section {
                             ForEach(cartModel.cartValue, id: \.id) { item in
-                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price )
+                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price, stepperValue: item.stepperValues)
                             }
                             .onDelete { indices in
                                 cartModel.deleteFromCart(indices: indices)

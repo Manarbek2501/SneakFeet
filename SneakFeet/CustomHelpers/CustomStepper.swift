@@ -13,21 +13,20 @@ import FirebaseFirestore
 struct MyStepper: View {
     @EnvironmentObject var storeModal: StoreModal
     @EnvironmentObject var cartModel: CartModalData
+    let stepperValue: Int
     var body: some View {
-        VStack {
-            ForEach(cartModel.cartValue) { cartItem in
                 HStack {
                     Button("-") {
-                        if cartItem.stepperValues > 0 {
+                        if stepperValue > 0 {
                             cartModel.stepper -= 1
                             cartModel.updateStepperValues(newValue: cartModel.stepper, stepper: cartModel.stepper)
                         }
                     }
                     Spacer()
-                    Text("\(cartItem.stepperValues)")
+                    Text("\(stepperValue)")
                     Spacer()
                     Button("+") {
-                        if cartItem.stepperValues < 6 {
+                        if stepperValue < 6 {
                             cartModel.stepper += 1
                             cartModel.updateStepperValues(newValue: cartModel.stepper, stepper: cartModel.stepper)
                         }
@@ -41,8 +40,6 @@ struct MyStepper: View {
                 .padding(.horizontal, 32)
                 .foregroundColor(.white)
                 .buttonStyle(.plain)
-            }
-        }
     }
 }
 
