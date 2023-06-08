@@ -117,5 +117,7 @@ class CatalogModalData: ObservableObject {
         }
     }
     
-    
+    func fetchOrderData() async {
+        await fetchOrderHistoryForCurrentUser()
+    }
 }

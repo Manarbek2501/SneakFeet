@@ -34,10 +34,11 @@ struct ListCartScreenView: View {
     @State private var showOrderAlert: Bool = false
     @State private var showBottomSheets: Bool = false
     var totalPrice: Int {
-        return cartModel.cartValue.reduce(0) { $0 + Int($1.price)! }
+        return cartModel.cartValue.reduce(0) { $0 + ($1.stepperValues * Int($1.price)!) }
     }
+
     var totalItems: Int {
-        return cartModel.cartValue.reduce(0) { $0 + Int($1.item)! }
+        return cartModel.cartValue.reduce(0) { $0 + ($1.stepperValues * Int($1.item)!) }
     }
     
     var body: some View {
@@ -70,9 +71,9 @@ struct ListCartScreenView: View {
                             }
                         }
                     }
-                    .onAppear() {
+                    .onAppear {
                         Task {
-                            await fetchData()
+                            await cartModel.fetchData()
                         }
                     }
                     .listStyle(.plain)
@@ -109,11 +110,6 @@ struct ListCartScreenView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    func fetchData() async {
-        await cartModel.fetchCartForCurrentUserFirestore()
-    }
-    
-    
     func placeOrder() {
         let order = String(cartModel.cartValue.count)
         let dateFormatter = DateFormatter()
@@ -141,8 +137,8 @@ struct ListCartScreenView: View {
         }
         var stepperItem = [String]()
         for card in cartModel.cartValue {
-            let item = card.item
-            stepperItem.append(item)
+            let item = card.stepperValues
+            stepperItem.append(String(item))
         }
         var prices = [Int]()
         for card in cartModel.cartValue {

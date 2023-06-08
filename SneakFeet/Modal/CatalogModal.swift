@@ -24,7 +24,9 @@ extension CatalogData {
             description: self.description,
             price: String(self.price),
             item: "1",
-            clicked: self.clicked
+            clicked: self.clicked,
+            stepperValues: 1,
+            stepper: 1
         )
     }
 }

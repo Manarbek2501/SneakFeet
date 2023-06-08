@@ -63,7 +63,7 @@ struct CotologCardsRow: View {
         }
     }
     func getCartData(item: CatalogData) {
-        let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item), clicked: item.clicked)
+        let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item), clicked: item.clicked, stepperValues: cartModel.stepper, stepper: cartModel.stepper)
             cartModel.saveToFirestore(cartModel: cartModelData)
     }
 }

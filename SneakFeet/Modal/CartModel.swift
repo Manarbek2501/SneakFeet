@@ -20,17 +20,21 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
     let price: String
     let item: String
     let clicked: Bool
+    let stepperValues: Int
+    let stepper: Int
     
     enum CodingKeys: String, CodingKey {
-        case id, title, image, description, price, item, clicked
+        case id, title, image, description, price, item, clicked, stepperValues, stepper
     }
-    init(title: String, image: String, description: String, price: String, item: String, clicked: Bool) {
+    init(title: String, image: String, description: String, price: String, item: String, clicked: Bool, stepperValues: Int, stepper: Int) {
         self.title = title
         self.image = image
         self.description = description
         self.price = price
         self.item = item
         self.clicked = clicked
+        self.stepperValues = stepperValues
+        self.stepper = stepper
     }
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -40,6 +44,8 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
         self.price = try container.decode(String.self, forKey: .price)
         self.item = try container.decode(String.self, forKey: .item)
         self.clicked = try container.decode(Bool.self, forKey: .clicked)
+        self.stepperValues = try container.decode(Int.self, forKey: .stepperValues)
+        self.stepper = try container.decode(Int.self, forKey: .stepper)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -50,6 +56,8 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
         try container.encode(price, forKey: .price)
         try container.encode(item, forKey: .item)
         try container.encode(clicked, forKey: .clicked)
+        try container.encode(stepperValues, forKey: .stepperValues)
+        try container.encode(stepper, forKey: .stepper)
     }
 }
 

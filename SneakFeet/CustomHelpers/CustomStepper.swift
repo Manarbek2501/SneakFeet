@@ -11,33 +11,39 @@ import Firebase
 import FirebaseFirestore
 
 struct MyStepper: View {
-    
-    @Binding var stepperValue: Int
     @EnvironmentObject var storeModal: StoreModal
     @EnvironmentObject var cartModel: CartModalData
     var body: some View {
-        HStack {
-            Button("-") {
-                if stepperValue > 0 {
-                    stepperValue -= 1
-                    
+        VStack {
+            ForEach(cartModel.cartValue) { cartItem in
+                HStack {
+                    Button("-") {
+                        if cartItem.stepperValues > 0 {
+                            cartModel.stepper -= 1
+                            cartModel.updateStepperValues(newValue: cartModel.stepper, stepper: cartModel.stepper)
+                        }
+                    }
+                    Spacer()
+                    Text("\(cartItem.stepperValues)")
+                    Spacer()
+                    Button("+") {
+                        if cartItem.stepperValues < 6 {
+                            cartModel.stepper += 1
+                            cartModel.updateStepperValues(newValue: cartModel.stepper, stepper: cartModel.stepper)
+                        }
+                    }
                 }
-            }
-            Spacer()
-            Text(stepperValue.formatted())
-            Spacer()
-            Button("+") {
-                if stepperValue < 6 {
-                    stepperValue += 1
-                    
+                .onAppear {
+                    Task {
+                        await cartModel.fetchData()
+                    }
                 }
+                .padding(.horizontal, 32)
+                .foregroundColor(.white)
+                .buttonStyle(.plain)
             }
         }
-        .onAppear {
-            
-        }
-        .padding(.horizontal, 32)
-        .foregroundColor(.white)
-        .buttonStyle(.plain)
     }
 }
+
+

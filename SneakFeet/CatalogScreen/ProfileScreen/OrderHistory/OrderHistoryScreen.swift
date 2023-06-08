@@ -37,7 +37,7 @@ struct OrderHistoryScreen: View {
                 }
                 .onAppear {
                     Task {
-                        await fetchData()
+                        await orderHistory.fetchOrderData()
                     }
                 }
                 .navigationTitle("Order History")
@@ -54,9 +54,6 @@ struct OrderHistoryScreen: View {
                 }
             }
         }
-    }
-    private func fetchData() async {
-        await orderHistory.fetchOrderHistoryForCurrentUser()
     }
 }
 struct EmptyOrderHistoryScreen: View {
@@ -81,7 +78,7 @@ struct EmptyOrderHistoryScreen: View {
             }
             .onAppear {
                 Task {
-                    await fetchData()
+                    await orderHistory.fetchOrderData()
                 }
             }
             .navigationTitle("Order History")
@@ -97,9 +94,6 @@ struct EmptyOrderHistoryScreen: View {
                 }
             }
         }
-    }
-    private func fetchData() async {
-        await orderHistory.fetchOrderHistoryForCurrentUser()
     }
 }
 struct OrderHistoryScreen_Previews: PreviewProvider {
