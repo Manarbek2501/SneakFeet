@@ -35,11 +35,6 @@ struct OrderHistoryScreen: View {
                     }
                     .listStyle(.plain)
                 }
-                .onAppear {
-                    Task {
-                        await orderHistory.fetchOrderData()
-                    }
-                }
                 .navigationTitle("Order History")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -74,11 +69,6 @@ struct EmptyOrderHistoryScreen: View {
                     Text("Here will be the history of your orders.")
                         .font(.system(size: 17, weight: .regular))
                     Spacer()
-                }
-            }
-            .onAppear {
-                Task {
-                    await orderHistory.fetchOrderData()
                 }
             }
             .navigationTitle("Order History")

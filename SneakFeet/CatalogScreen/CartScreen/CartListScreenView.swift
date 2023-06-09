@@ -11,10 +11,15 @@ import Firebase
 import FirebaseDatabase
 import FirebaseFirestore
 
+enum CartScreenState {
+    case isEmpty
+    case isNotEmpty
+}
 struct CartListScreenView: View {
     @EnvironmentObject var cards: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
     @EnvironmentObject var cartModel: CartModalData
+    
     var body: some View {
         if cartModel.cartValue.isEmpty {
             CartScreenView()
@@ -33,10 +38,11 @@ struct ListCartScreenView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showOrderAlert: Bool = false
     @State private var showBottomSheets: Bool = false
+    
     var totalPrice: Int {
         return cartModel.cartValue.reduce(0) { $0 + ($1.stepperValues * Int($1.price)!) }
     }
-
+    
     var totalItems: Int {
         return cartModel.cartValue.reduce(0) { $0 + ($1.stepperValues * Int($1.item)!) }
     }
@@ -49,7 +55,7 @@ struct ListCartScreenView: View {
                 VStack {
                     List {
                         Section {
-                            ForEach(cartModel.cartValue, id: \.id) { item in
+                            ForEach(cartModel.cartValue) { item in
                                 ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price, stepperValue: item.stepperValues)
                             }
                             .onDelete { indices in
@@ -71,12 +77,12 @@ struct ListCartScreenView: View {
                             }
                         }
                     }
+                    .listStyle(.plain)
                     .onAppear {
                         Task {
-                            await cartModel.fetchData()
+                            try await cartModel.fetchData()
                         }
                     }
-                    .listStyle(.plain)
                     CustomButton(title: "Confirm order")
                         .padding([.leading, .trailing], 16)
                         .padding(.bottom, 23)
@@ -92,7 +98,7 @@ struct ListCartScreenView: View {
                     }
                     Button(role: .none) {
                         showBottomSheets = true
-                        placeOrder()
+                        addToOrderHistory(totalItems, totalPrice)
                     } label: {
                         Text("Confirm")
                     }
@@ -101,7 +107,7 @@ struct ListCartScreenView: View {
                 }
                 
                 .sheet(isPresented: $showBottomSheets) {
-                    bottomSheet()
+                    CartBottomSheet(showBottomSheet: $showBottomSheets)
                         .presentationDetents([.medium, .height(505)])
                         .presentationDragIndicator(.hidden)
                 }
@@ -110,90 +116,37 @@ struct ListCartScreenView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    func placeOrder() {
-        let order = String(cartModel.cartValue.count)
+    
+    func addToOrderHistory(_ totalItems: Int, _ totalPrice: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let currentDate = dateFormatter.string(from: Date())
+        
+        let order = String(cartModel.cartValue.count)
         let items = String(totalItems)
         var imageArray = [String]()
+        let priceString = String(totalPrice)
+        var title = [String]()
+        var description = [String]()
+        var stepperItem = [String]()
+        var prices = [Int]()
         
         for card in cartModel.cartValue {
             let orderImage = card.image
             imageArray.append(orderImage)
-        }
-        
-        let priceString = String(totalPrice)
-        
-        var title = [String]()
-        for card in cartModel.cartValue {
             let orderTitle = card.title
             title.append(orderTitle)
-        }
-        var description = [String]()
-        for card in cartModel.cartValue {
             let orderDescription = card.description
             description.append(orderDescription)
-        }
-        var stepperItem = [String]()
-        for card in cartModel.cartValue {
             let item = card.stepperValues
             stepperItem.append(String(item))
-        }
-        var prices = [Int]()
-        for card in cartModel.cartValue {
             let orderPrice = card.price
             prices.append(Int(orderPrice)!)
         }
-        
         catalogModal.saveOrderHistoryForCurrentUser(order: order, orderedImage: imageArray, creationDate: currentDate, items: items, price: priceString, title: title, description: description, item: stepperItem, prices: prices)
-    }
-    
-    
-    func bottomSheet() -> some View {
-        Group {
-            ZStack {
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(Color.white)
-                    .frame(height: 538)
-                ZStack {
-                    VStack {
-                        HStack {
-                            ForEach(Array(cartModel.cartValue.enumerated()), id: \.element) { index, image in
-                                ZStack {
-                                    if index == 0 || index == 1 {
-                                        Circle()
-                                            .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                                            .frame(width: 150, height: 150)
-                                        AnimatedImage(url: URL(string: image.image))
-                                            .resizable()
-                                            .frame(width: 115, height: 115)
-                                            .cornerRadius(15)
-                                    }
-                                }
-                            }
-                        }
-                        .padding(.bottom, 40)
-                        Text("Your order is succesfully\n placed. Thanks!")
-                            .font(.system(size: 28, weight: .semibold))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom, 24)
-                        CustomButton(title: "Get back to shopping")
-                            .onTapGesture {
-                                showBottomSheets = false
-                            }
-                    }
-                    .padding([.leading, .trailing], 16)
-                    Image("orderBack")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.bottom, 365)
-                }
-            }
+        Task {
+          await  catalogModal.fetchOrderData()
         }
-        .frame(maxHeight: .infinity, alignment: .bottom)
-        .edgesIgnoringSafeArea(.all)
     }
 }
 

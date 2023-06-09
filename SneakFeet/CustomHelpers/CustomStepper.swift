@@ -32,11 +32,6 @@ struct MyStepper: View {
                         }
                     }
                 }
-                .onAppear {
-                    Task {
-                        await cartModel.fetchData()
-                    }
-                }
                 .padding(.horizontal, 32)
                 .foregroundColor(.white)
                 .buttonStyle(.plain)

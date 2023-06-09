@@ -16,7 +16,7 @@ class CatalogModalData: ObservableObject {
     
     @Published var catalogData = [CatalogData]()
     @Published var orderHistoryValue: [HistoryModel] = []
-    
+
     init() {
         let db = Firestore.firestore()
         
@@ -28,7 +28,7 @@ class CatalogModalData: ObservableObject {
             }
             
             for catalogCards in snap!.documents {
-                let id = catalogCards.documentID
+                _ = catalogCards.documentID
                 let title = catalogCards.get("title") as! String
                 let description = catalogCards.get("description") as? String
                 let image = catalogCards.get("image") as! String
@@ -40,7 +40,7 @@ class CatalogModalData: ObservableObject {
             
         }
         Task {
-            await fetchOrderHistoryForCurrentUser()
+            await fetchOrderData()
         }
     }
     

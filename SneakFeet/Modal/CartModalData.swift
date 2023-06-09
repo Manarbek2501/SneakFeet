@@ -14,6 +14,7 @@ class CartModalData: ObservableObject {
     
     @Published var cartValue = [CartModel]()
     @Published var stepper: Int = 1
+    @Published var documnetID: String = ""
     
     let currentUserID: String
     
@@ -21,7 +22,7 @@ class CartModalData: ObservableObject {
         currentUserID = Auth.auth().currentUser?.uid ?? ""
         
         Task {
-            await fetchCartForCurrentUserFirestore()
+            await fetchData()
         }
     }
     
@@ -39,7 +40,7 @@ class CartModalData: ObservableObject {
         let userCartCollection = db.collection("carts").document(userID).collection("cartItems")
         
         do {
-            let data = try JSONEncoder().encode(cartModel)
+            _ = try JSONEncoder().encode(cartModel)
             let documentRef = userCartCollection.document()
             try documentRef.setData(from: cartModel)
         } catch {
@@ -73,7 +74,7 @@ class CartModalData: ObservableObject {
         }
     }
     
-    func fetchCartForCurrentUserFirestore() async {
+    func fetchCartForCurrentUserFirestore() {
         if let userID = getCurrentUserID() {
             fetchFromFirestoreData(userID: userID) { cart in
                 self.cartValue = cart
@@ -86,7 +87,7 @@ class CartModalData: ObservableObject {
     func deleteFromCart(indices: IndexSet) {
         let itemsToDelete = indices.map { cartValue[$0] }
         for (index, item) in itemsToDelete.enumerated() {
-            guard let documentID = item.id else { continue }
+            guard item.id != nil else { continue }
             guard let userID = Auth.auth().currentUser?.uid else { return }
             let documentRef = Firestore.firestore()
                 .collection("carts")
@@ -133,29 +134,17 @@ class CartModalData: ObservableObject {
                 let selectedDocument = documents[index]
                 let selectedDocumentID = selectedDocument.documentID
 
-                documentRef.document(selectedDocumentID).updateData(["stepperValues": newValue]) { error in
+                documentRef.document(selectedDocumentID).updateData(["stepperValues": newValue, "stepper": stepper]) { error in
                     if let error = error {
-                        // Handle any error that occurred during the update
                         print("Error updating stepper value: \(error.localizedDescription)")
                     } else {
-                        // Update successful
-                        print("Stepper value updated successfully!")
-                    }
-                }
-                documentRef.document(selectedDocumentID).updateData(["stepper": stepper]) { error in
-                    if let error = error {
-                        // Handle any error that occurred during the update
-                        print("Error updating stepper value: \(error.localizedDescription)")
-                    } else {
-                        // Update successful
                         print("Stepper value updated successfully!")
                     }
                 }
             }
         }
     }
-    
     func fetchData() async {
-        await fetchCartForCurrentUserFirestore()
+        fetchCartForCurrentUserFirestore()
     }
 }

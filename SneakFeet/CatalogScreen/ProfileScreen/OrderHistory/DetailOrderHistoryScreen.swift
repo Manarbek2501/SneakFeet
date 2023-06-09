@@ -105,6 +105,7 @@ struct DetailView: View {
                                 .foregroundColor(Color(CGColor(red: 0.557, green: 0.557, blue: 0.576, alpha: 1)))
                             Text("\(item) • $\(price)")
                                 .font(.system(size: 12, weight: .semibold))
+                                .padding(.top, 2)
                         }
                         .padding(.leading)
                         Spacer()

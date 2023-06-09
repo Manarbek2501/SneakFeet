@@ -43,11 +43,11 @@ struct AccountInfoScreenView: View {
                         HStack {
                             VStack {
                                 if self.isNewPasswordVisible {
-                                    TextField("Password", text: $viewModal.changeOldPassword)
+                                    TextField("Old password", text: $viewModal.changeOldPassword)
                                         .autocapitalization(.none)
                                         .padding()
                                 } else {
-                                    SecureField("Password", text: $viewModal.changeOldPassword)
+                                    SecureField("Old password", text: $viewModal.changeOldPassword)
                                         .autocapitalization(.none)
                                         .padding()
                                 }
@@ -69,11 +69,11 @@ struct AccountInfoScreenView: View {
                         HStack {
                             VStack {
                                 if self.isPasswordVisible {
-                                    TextField("Password", text: $viewModal.changeNewPassword)
+                                    TextField("New password", text: $viewModal.changeNewPassword)
                                         .autocapitalization(.none)
                                         .padding()
                                 } else {
-                                    SecureField("Password", text: $viewModal.changeNewPassword)
+                                    SecureField("New password", text: $viewModal.changeNewPassword)
                                         .autocapitalization(.none)
                                         .padding()
                                 }
