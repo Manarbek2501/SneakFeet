@@ -27,6 +27,7 @@ struct OrderHistoryView: View {
                     .foregroundColor(Color(CGColor(red: 0.557, green: 0.557, blue: 0.576, alpha: 1)))
                 Text("\(items) items • $\(price)")
                     .font(.system(size: 12, weight: .semibold))
+                    .padding(.top, 10)
             }
             .padding(.leading, 10)
             Spacer()
@@ -43,7 +44,7 @@ struct ImagesGridView: View {
                 if index == 0 {
                     AnimatedImage(url: URL(string: image))
                         .resizable()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 100, height: 100)
                         .cornerRadius(12)
                 }
             }
