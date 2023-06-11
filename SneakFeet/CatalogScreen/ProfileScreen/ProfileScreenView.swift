@@ -61,7 +61,7 @@ struct ProfileScreenView: View {
                             } label: {
                                 Text("Confirm")
                             }
-
+                            
                         }
                 }
             }
@@ -110,7 +110,7 @@ private struct FaqBlocks: View {
                 .fill(Color.white)
                 .frame(height: 126)
             VStack {
-               FaqQuestions(questionTitle: "How to know your shoe size?", questionURL: "https://www.2bigfeet.com/pages/measure-your-shoe-size#:~:text=To%20find%20your%20size%2C%20measure,inch%2Dto%2Dsize%20table.")
+                FaqQuestions(questionTitle: "How to know your shoe size?", questionURL: "https://www.2bigfeet.com/pages/measure-your-shoe-size#:~:text=To%20find%20your%20size%2C%20measure,inch%2Dto%2Dsize%20table.")
                 Divider()
                 FaqQuestions(questionTitle: "How to check the authenticity\nof the shoe?", questionURL: "https://hypestew.com/blogs/news/legit-check")
             }
@@ -121,7 +121,8 @@ private struct FaqBlocks: View {
 
 private struct FaqQuestions: View {
     @State private var isPresentWebView = false
-    
+    @State private var progress: Float = 0.0
+    @ObservedObject var webModel = WebViewModel(progress: 0.0)
     var questionTitle: String
     var questionURL: String
     
@@ -138,22 +139,30 @@ private struct FaqQuestions: View {
             isPresentWebView = true
         }
         .fullScreenCover(isPresented: $isPresentWebView, content: {
-            NavigationStack {
-                WebView(url: URL(string: questionURL)!)
-                    .ignoresSafeArea()
-                    .navigationTitle("sneakersinfo.com")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Image(systemName: "chevron.backward")
-                                .foregroundColor(.black)
-                                .font(.system(size: 23, weight: .medium))
-                                .onTapGesture {
-                                    isPresentWebView = false
-                                }
+            NavigationView {
+                VStack {
+                    ProgressView(value: webModel.progress)
+                        .progressViewStyle(LinearProgressViewStyle())
+                    
+                    WebView(viewModel: webModel, url: URL(string: questionURL)!)
+                        .ignoresSafeArea()
+                        .navigationTitle("sneakersinfo.com")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Image(systemName: "chevron.backward")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 23, weight: .medium))
+                                    .onTapGesture {
+                                        isPresentWebView = false
+                                    }
+                            }
                         }
-                    }
+                }
             }
         })
     }
 }
+
+
+

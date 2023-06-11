@@ -15,6 +15,7 @@ class CartModalData: ObservableObject {
     @Published var cartValue = [CartModel]()
     @Published var stepper: Int = 1
     @Published var documnetID: String = ""
+    var selectedID: String?
     
     let currentUserID: String
     
@@ -24,6 +25,7 @@ class CartModalData: ObservableObject {
         Task {
             await fetchData()
         }
+        
     }
     
     func getCurrentUserID() -> String? {
@@ -40,9 +42,11 @@ class CartModalData: ObservableObject {
         let userCartCollection = db.collection("carts").document(userID).collection("cartItems")
         
         do {
-            _ = try JSONEncoder().encode(cartModel)
+            var updatedCartModel = cartModel // Create a mutable copy of the cart model
             let documentRef = userCartCollection.document()
-            try documentRef.setData(from: cartModel)
+            updatedCartModel.id = documentRef.documentID // Assign the document ID to the `id` property
+            
+            try documentRef.setData(from: updatedCartModel) // Save the updated cart model with the document ID
         } catch {
             print("Error encoding cart model: \(error)")
         }
@@ -69,7 +73,6 @@ class CartModalData: ObservableObject {
                     print("Failed to decode cart item: \(error)")
                 }
             }
-            
             completion(cartData)
         }
     }
@@ -93,17 +96,17 @@ class CartModalData: ObservableObject {
                 .collection("carts")
                 .document(userID)
                 .collection("cartItems")
-
+            
             documentRef.getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting documents: \(error.localizedDescription)")
                     return
                 }
-
+                
                 guard let documents = querySnapshot?.documents else {
                     return
                 }
-
+                
                 let selectedDocument = documents[index]
                 let selectedDocumentID = selectedDocument.documentID
                 documentRef.document(selectedDocumentID).delete()
@@ -112,38 +115,35 @@ class CartModalData: ObservableObject {
         cartValue.remove(atOffsets: indices)
     }
     
-    func updateStepperValues(newValue: Int, stepper: Int) {
-        let itemsToDelete = cartValue
-        for (index, item) in itemsToDelete.enumerated() {
-            guard item.id != nil else { continue }
-            guard let userID = Auth.auth().currentUser?.uid else { return }
-            let documentRef = Firestore.firestore()
-                .collection("carts")
-                .document(userID)
-                .collection("cartItems")
-            documentRef.getDocuments { (querySnapshot, error) in
+    
+    func updateStepperValues(newValue: Int, stepper: Int, atIndex index: Int) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let documentRef = Firestore.firestore()
+            .collection("carts")
+            .document(userID)
+            .collection("cartItems")
+        
+        documentRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                return
+            }
+            
+            let selectedDocument = documents[index]
+            let selectedDocumentID = selectedDocument.documentID
+            
+            documentRef.document(selectedDocumentID).updateData(["stepperValues": newValue, "stepper": stepper]) { error in
                 if let error = error {
-                    print("Error getting documents: \(error.localizedDescription)")
-                    return
-                }
-
-                guard let documents = querySnapshot?.documents else {
-                    return
-                }
-
-                let selectedDocument = documents[index]
-                let selectedDocumentID = selectedDocument.documentID
-
-                documentRef.document(selectedDocumentID).updateData(["stepperValues": newValue, "stepper": stepper]) { error in
-                    if let error = error {
-                        print("Error updating stepper value: \(error.localizedDescription)")
-                    } else {
-                        print("Stepper value updated successfully!")
-                    }
+                    print("Error updating stepper value: \(error.localizedDescription)")
                 }
             }
         }
     }
+    
     func fetchData() async {
         fetchCartForCurrentUserFirestore()
     }

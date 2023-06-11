@@ -81,6 +81,7 @@
 		4B2EC4122A1E53820090A8D4 /* CustomChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChoose.swift; sourceTree = "<group>"; };
 		4B2EC4182A1F3B8A0090A8D4 /* CartListScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartListScreenView.swift; sourceTree = "<group>"; };
 		4B2EC41A2A1F3BA50090A8D4 /* ListDesignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDesignView.swift; sourceTree = "<group>"; };
+		4B41E6502A35D3F3007E57B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4B65C43D2A337D31001E3C90 /* CartBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBottomSheet.swift; sourceTree = "<group>"; };
 		4B6B35F52A21F4A3007BFC91 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4B6B35F82A21FB1A007BFC91 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -132,6 +133,7 @@
 		4B2EC3D22A1B7C980090A8D4 /* SneakFeet */ = {
 			isa = PBXGroup;
 			children = (
+				4B41E6502A35D3F3007E57B6 /* Info.plist */,
 				4B2EC4052A1E1B700090A8D4 /* Modal */,
 				4B2EC3F52A1DF83F0090A8D4 /* CatalogScreen */,
 				4B2EC3ED2A1B9D7C0090A8D4 /* WelcomeScreen */,
@@ -526,9 +528,9 @@
 				DEVELOPMENT_TEAM = H2MWQXR936;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SneakFeet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -555,9 +557,9 @@
 				DEVELOPMENT_TEAM = H2MWQXR936;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SneakFeet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

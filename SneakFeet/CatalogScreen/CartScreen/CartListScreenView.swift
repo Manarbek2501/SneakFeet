@@ -55,8 +55,8 @@ struct ListCartScreenView: View {
                 VStack {
                     List {
                         Section {
-                            ForEach(cartModel.cartValue) { item in
-                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price, stepperValue: item.stepperValues)
+                            ForEach(Array(cartModel.cartValue.enumerated()), id: \.element) { index, item in
+                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price, stepperValue: item.stepperValues, index: index)
                             }
                             .onDelete { indices in
                                 cartModel.deleteFromCart(indices: indices)
@@ -78,14 +78,11 @@ struct ListCartScreenView: View {
                         }
                     }
                     .listStyle(.plain)
-                    .onAppear {
-                        Task {
-                            try await cartModel.fetchData()
-                        }
-                    }
                     CustomButton(title: "Confirm order")
                         .padding([.leading, .trailing], 16)
                         .padding(.bottom, 23)
+                        .disabled(totalItems == 0)
+                        .opacity(totalItems == 0 ? 0.7 : 1)
                         .onTapGesture {
                             showOrderAlert = true
                         }
@@ -105,7 +102,6 @@ struct ListCartScreenView: View {
                 } message: {
                     Text("Are you sure you want to confirm?")
                 }
-                
                 .sheet(isPresented: $showBottomSheets) {
                     CartBottomSheet(showBottomSheet: $showBottomSheets)
                         .presentationDetents([.medium, .height(505)])
@@ -145,7 +141,7 @@ struct ListCartScreenView: View {
         }
         catalogModal.saveOrderHistoryForCurrentUser(order: order, orderedImage: imageArray, creationDate: currentDate, items: items, price: priceString, title: title, description: description, item: stepperItem, prices: prices)
         Task {
-          await  catalogModal.fetchOrderData()
+            await  catalogModal.fetchOrderData()
         }
     }
 }

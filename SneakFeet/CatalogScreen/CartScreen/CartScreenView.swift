@@ -26,13 +26,13 @@ struct CartScreenView: View {
                     Spacer()
                 }
             }
-            .onAppear {
-                Task {
-                   try await cartModel.fetchData()
-                }
-            }
             .navigationTitle("Cart")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onAppear {
+            Task {
+                await cartModel.fetchData()
+            }
         }
     }
 }

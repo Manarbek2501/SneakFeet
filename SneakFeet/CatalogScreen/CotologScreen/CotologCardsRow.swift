@@ -10,6 +10,7 @@ import SDWebImageSwiftUI
 
 struct CotologCardsRow: View {
     let item: CatalogData
+    let cartItem: CartModel
     @EnvironmentObject var storeModal: StoreModal
     @EnvironmentObject var catalogModal: CatalogModalData
     @EnvironmentObject var cartModel: CartModalData
@@ -64,13 +65,13 @@ struct CotologCardsRow: View {
     }
     func getCartData(item: CatalogData) {
         let cartModelData = CartModel(title: item.title, image: item.image, description: item.description, price: String(item.price), item: String(item.item), clicked: item.clicked, stepperValues: cartModel.stepper, stepper: cartModel.stepper)
-            cartModel.saveToFirestore(cartModel: cartModelData)
+        cartModel.saveToFirestore(cartModel: cartModelData)
     }
 }
 
 struct CotologCardsRow_Previews: PreviewProvider {
     static var previews: some View {
-        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120, item: 0, clicked: false), title: "", description: "", image: "", price: 0, isSelected: false)
+        CotologCardsRow(item: CatalogData(title: "Dolce", description: "Dolce", image: "Dolce", price: 120, item: 0, clicked: false), cartItem: CartModel(title: "", image: "", description: "", price: "", item: "", clicked: false, stepperValues: 1, stepper: 1), title: "", description: "", image: "", price: 0, isSelected: false)
             .environmentObject(StoreModal())
             .environmentObject(CatalogModalData())
             .environmentObject(CartModalData())

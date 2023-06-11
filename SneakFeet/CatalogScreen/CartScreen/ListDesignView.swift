@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+
 struct ListDesignView: View {
     @EnvironmentObject var cartModel: CartModalData
     var image: String = ""
@@ -14,6 +15,7 @@ struct ListDesignView: View {
     var description: String = ""
     var price: String = ""
     var stepperValue: Int
+    var index: Int
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 0)
@@ -33,7 +35,7 @@ struct ListDesignView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 50)
                             .fill(Color.black)
-                        MyStepper(stepperValue: stepperValue)
+                        CustomStepper(stepperValue: stepperValue, index: index)
                     }
                     .frame(width: 166 ,height: 36)
                     .padding(.top, 12)
@@ -44,12 +46,17 @@ struct ListDesignView: View {
             .padding([.bottom, .top], 10)
         }
         .frame(height: 160)
+        .onAppear {
+            Task {
+                await cartModel.fetchData()
+            }
+        }
     }
 }
 
 struct ListDesignView_Previews: PreviewProvider {
     static var previews: some View {
-        ListDesignView(stepperValue: 1)
+        ListDesignView(stepperValue: 1, index: 0)
             .environmentObject(CartModalData())
     }
 }
