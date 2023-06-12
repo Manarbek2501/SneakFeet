@@ -42,11 +42,11 @@ class CartModalData: ObservableObject {
         let userCartCollection = db.collection("carts").document(userID).collection("cartItems")
         
         do {
-            var updatedCartModel = cartModel // Create a mutable copy of the cart model
+            var updatedCartModel = cartModel
             let documentRef = userCartCollection.document()
-            updatedCartModel.id = documentRef.documentID // Assign the document ID to the `id` property
+            updatedCartModel.id = documentRef.documentID
             
-            try documentRef.setData(from: updatedCartModel) // Save the updated cart model with the document ID
+            try documentRef.setData(from: updatedCartModel) 
         } catch {
             print("Error encoding cart model: \(error)")
         }
@@ -77,7 +77,7 @@ class CartModalData: ObservableObject {
         }
     }
     
-    func fetchCartForCurrentUserFirestore() {
+    func fetchCartForCurrentUserFirestore() async {
         if let userID = getCurrentUserID() {
             fetchFromFirestoreData(userID: userID) { cart in
                 self.cartValue = cart
@@ -116,7 +116,7 @@ class CartModalData: ObservableObject {
     }
     
     
-    func updateStepperValues(newValue: Int, stepper: Int, atIndex index: Int) {
+    func updateStepperValues(newValue: Int, atIndex index: Int) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let documentRef = Firestore.firestore()
             .collection("carts")
@@ -136,7 +136,7 @@ class CartModalData: ObservableObject {
             let selectedDocument = documents[index]
             let selectedDocumentID = selectedDocument.documentID
             
-            documentRef.document(selectedDocumentID).updateData(["stepperValues": newValue, "stepper": stepper]) { error in
+            documentRef.document(selectedDocumentID).updateData(["stepperValues": newValue]) { error in
                 if let error = error {
                     print("Error updating stepper value: \(error.localizedDescription)")
                 }
@@ -145,6 +145,8 @@ class CartModalData: ObservableObject {
     }
     
     func fetchData() async {
-        fetchCartForCurrentUserFirestore()
+        Task {
+            await fetchCartForCurrentUserFirestore()
+        }
     }
 }

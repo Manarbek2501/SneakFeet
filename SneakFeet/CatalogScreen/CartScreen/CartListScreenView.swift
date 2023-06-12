@@ -56,7 +56,7 @@ struct ListCartScreenView: View {
                     List {
                         Section {
                             ForEach(Array(cartModel.cartValue.enumerated()), id: \.element) { index, item in
-                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price, stepperValue: item.stepperValues, index: index)
+                                ListDesignView(image: item.image , title: item.title , description: item.description , price: item.price, stepperValue: $cartModel.cartValue[index].stepperValues, index: index)
                             }
                             .onDelete { indices in
                                 cartModel.deleteFromCart(indices: indices)
@@ -110,15 +110,21 @@ struct ListCartScreenView: View {
             }
             .navigationTitle("Cart")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                Task {
+                    await cartModel.fetchData()
+                }
+            }
         }
     }
+    
     
     func addToOrderHistory(_ totalItems: Int, _ totalPrice: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let currentDate = dateFormatter.string(from: Date())
         
-        let order = String(cartModel.cartValue.count)
+        let order = String(Int.random(in: 1...1000))
         let items = String(totalItems)
         var imageArray = [String]()
         let priceString = String(totalPrice)

@@ -23,11 +23,23 @@ struct OrderHistoryScreen: View {
                     List {
                         ForEach(orderHistory.orderHistoryValue) { item in
                             NavigationLink {
-                                DetailOrderHistoryScreen(navTitle: item.order, date: item.creationDate, items: item.items, price: item.price, image: item.orderedImage, title: item.title, description: item.description, item: item.item, prices: item.prices)
-                                    .navigationBarBackButtonHidden(true)
+                                DetailOrderHistoryScreen(navTitle: item.order,
+                                                         date: item.creationDate,
+                                                         items: item.items,
+                                                         price: item.price,
+                                                         image: item.orderedImage,
+                                                         title: item.title,
+                                                         description: item.description,
+                                                         item: item.item,
+                                                         prices: item.prices)
+                                .navigationBarBackButtonHidden(true)
                             } label: {
                                 Section {
-                                    OrderHistoryView(image: item.orderedImage, order: item.order, date: item.creationDate, items: item.items, price: item.price)
+                                    OrderHistoryView(image: item.orderedImage,
+                                                     order: item.order,
+                                                     date: item.creationDate,
+                                                     items: item.items,
+                                                     price: item.price)
                                 }
                             }
                             

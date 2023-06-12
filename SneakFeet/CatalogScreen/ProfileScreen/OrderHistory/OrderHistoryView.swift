@@ -37,7 +37,7 @@ struct OrderHistoryView: View {
 }
 struct ImagesGridView: View {
     let images: [String]
-
+    
     var body: some View {
         HStack(spacing: 4) {
             ForEach(Array(images.enumerated()), id: \.element) { index, image in
@@ -55,7 +55,11 @@ struct ImagesGridView: View {
 
 struct OrderHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderHistoryView(image: [], order: "", date: "", items: "", price: "")
+        OrderHistoryView(image: [],
+                         order: "",
+                         date: "",
+                         items: "",
+                         price: "")
             .environmentObject(CatalogModalData())
     }
 }

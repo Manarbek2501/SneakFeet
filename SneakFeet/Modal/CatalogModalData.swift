@@ -16,7 +16,7 @@ class CatalogModalData: ObservableObject {
     
     @Published var catalogData = [CatalogData]()
     @Published var orderHistoryValue: [HistoryModel] = []
-
+    
     init() {
         let db = Firestore.firestore()
         
@@ -106,7 +106,7 @@ class CatalogModalData: ObservableObject {
             completion(orderHistory)
         }
     }
-
+    
     func fetchOrderHistoryForCurrentUser() async {
         if let userID = getCurrentUserID() {
             fetchOrderHistoryForUser(userID: userID) { history in

@@ -122,7 +122,7 @@ struct SignInScreen: View {
                     }
                     .onChange(of: viewModal.error) { error in
                         showSignInAlert = (error != nil)
-                        }
+                    }
                     .ignoresSafeArea(.keyboard)
             }
         }

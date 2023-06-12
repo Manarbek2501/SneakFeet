@@ -14,7 +14,7 @@ struct ListDesignView: View {
     var title: String = ""
     var description: String = ""
     var price: String = ""
-    var stepperValue: Int
+    @Binding var stepperValue: Int
     var index: Int
     var body: some View {
         ZStack(alignment: .leading) {
@@ -35,7 +35,7 @@ struct ListDesignView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 50)
                             .fill(Color.black)
-                        CustomStepper(stepperValue: stepperValue, index: index)
+                        CustomStepper(stepperValue: $stepperValue, index: index)
                     }
                     .frame(width: 166 ,height: 36)
                     .padding(.top, 12)
@@ -56,7 +56,7 @@ struct ListDesignView: View {
 
 struct ListDesignView_Previews: PreviewProvider {
     static var previews: some View {
-        ListDesignView(stepperValue: 1, index: 0)
+        ListDesignView(stepperValue: .constant(1), index: 0)
             .environmentObject(CartModalData())
     }
 }

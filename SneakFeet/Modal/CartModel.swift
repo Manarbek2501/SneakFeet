@@ -20,8 +20,8 @@ struct CartModel: Identifiable, Equatable, Codable, Hashable{
     let price: String
     let item: String
     let clicked: Bool
-    let stepperValues: Int
-    let stepper: Int
+    var stepperValues: Int
+    var stepper: Int
     
     enum CodingKeys: String, CodingKey {
         case id, title, image, description, price, item, clicked, stepperValues, stepper

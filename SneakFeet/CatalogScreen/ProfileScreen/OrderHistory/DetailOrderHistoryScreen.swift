@@ -119,7 +119,12 @@ struct DetailView: View {
 
 struct DetailOrderHistoryScreen_Previews: PreviewProvider {
     static var previews: some View {
-        DetailOrderHistoryScreen(navTitle: "Order #", date: "", items: "", price: "", image: [], title: [], description: [], item: [], prices: [])
+        DetailOrderHistoryScreen(navTitle: "Order #",
+                                 date: "",
+                                 items: "", price: "",
+                                 image: [], title: [],
+                                 description: [],
+                                 item: [], prices: [])
             .environmentObject(CatalogModalData())
     }
 }

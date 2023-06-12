@@ -33,18 +33,18 @@ struct ShoeSizeScreenView: View {
                     }
             }
             .padding([.leading, .trailing], 16)
-                .navigationTitle("Shoe Size")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Image(systemName: "chevron.backward")
-                            .foregroundColor(.black)
-                            .font(.system(size: 23, weight: .medium))
-                            .onTapGesture {
-                                dismiss()
-                            }
-                    }
+            .navigationTitle("Shoe Size")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.black)
+                        .font(.system(size: 23, weight: .medium))
+                        .onTapGesture {
+                            dismiss()
+                        }
                 }
+            }
         }
     }
 }

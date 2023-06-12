@@ -13,14 +13,14 @@ import FirebaseFirestore
 struct CustomStepper: View {
     @EnvironmentObject var storeModal: StoreModal
     @EnvironmentObject var cartModel: CartModalData
-    let stepperValue: Int
+    @Binding var stepperValue: Int
     let index: Int
     var body: some View {
         HStack {
             Button("-") {
                 if stepperValue > 0 {
                     cartModel.stepper -= 1
-                    cartModel.updateStepperValues(newValue: cartModel.stepper, stepper: cartModel.stepper, atIndex: index)
+                    updateStepperValue()
                 }
             }
             Spacer()
@@ -29,13 +29,19 @@ struct CustomStepper: View {
             Button("+") {
                 if stepperValue < 6 {
                     cartModel.stepper += 1
-                    cartModel.updateStepperValues(newValue: cartModel.stepper, stepper: cartModel.stepper, atIndex: index)
+                    updateStepperValue()
                 }
             }
         }
         .padding(.horizontal, 32)
         .foregroundColor(.white)
         .buttonStyle(.plain)
+    }
+    private func updateStepperValue() {
+        cartModel.updateStepperValues(newValue: cartModel.stepper, atIndex: index)
+        Task {
+            await cartModel.fetchData()
+        }
     }
 }
 

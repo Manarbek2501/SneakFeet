@@ -13,7 +13,7 @@ class StoreModal: ObservableObject {
     @Published var cards = [CatalogData]()
     @Published var items = [Int]()
     @Published var cardsWithCount = [UUID : Int]()
-
+    
     
     func addStepperItems(item: Int) {
         items.append(item)
@@ -31,14 +31,14 @@ class StoreModal: ObservableObject {
     }
     
     @Published var shoeSizeText: String {
-           didSet {
-               UserDefaults.standard.set(shoeSizeText, forKey: "shoeSizeText")
-           }
-       }
-       
-       init() {
-           self.shoeSizeText = UserDefaults.standard.object(forKey: "shoeSizeText") as? String ?? ""
-           self.items = UserDefaults.standard.object(forKey: "stepperItems") as? [Int] ?? []
-       }
+        didSet {
+            UserDefaults.standard.set(shoeSizeText, forKey: "shoeSizeText")
+        }
+    }
+    
+    init() {
+        self.shoeSizeText = UserDefaults.standard.object(forKey: "shoeSizeText") as? String ?? ""
+        self.items = UserDefaults.standard.object(forKey: "stepperItems") as? [Int] ?? []
+    }
 }
 

@@ -184,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				4B2EC3EE2A1B9D900090A8D4 /* WelcomeScreenView.swift */,
-				4B6B35F72A21FAFC007BFC91 /* AuthViewModel */,
 				4B2EC3F02A1BA6AD0090A8D4 /* AuthView */,
 			);
 			path = WelcomeScreen;
@@ -213,10 +212,10 @@
 		4B2EC4002A1E10640090A8D4 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
-				4B9D5F3F2A27C860001CB6E1 /* OrderHistory */,
 				4B2EC3FC2A1DF8BE0090A8D4 /* ProfileScreenView.swift */,
 				4B2EC4012A1E108D0090A8D4 /* AccountInfoScreenView.swift */,
 				4B2EC4032A1E14180090A8D4 /* ShoeSizeScreenView.swift */,
+				4B9D5F3F2A27C860001CB6E1 /* OrderHistory */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -231,6 +230,7 @@
 				4B6B35FB2A21FBED007BFC91 /* User.swift */,
 				4B7310672A25E6E600B40DE5 /* CatalogModal.swift */,
 				4B0813762A2C9AAA00E1F407 /* CartModalData.swift */,
+				4B6B35F82A21FB1A007BFC91 /* AuthViewModel.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -252,14 +252,6 @@
 				4B2EC41A2A1F3BA50090A8D4 /* ListDesignView.swift */,
 			);
 			path = CartScreen;
-			sourceTree = "<group>";
-		};
-		4B6B35F72A21FAFC007BFC91 /* AuthViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				4B6B35F82A21FB1A007BFC91 /* AuthViewModel.swift */,
-			);
-			path = AuthViewModel;
 			sourceTree = "<group>";
 		};
 		4B6B35FD2A220ADD007BFC91 /* Frameworks */ = {

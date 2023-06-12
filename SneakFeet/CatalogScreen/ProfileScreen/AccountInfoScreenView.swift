@@ -15,31 +15,31 @@ struct AccountInfoScreenView: View {
     @State private var isShowingAlert: Bool = false
     
     var bindingToUsername: Binding<String> {
-            Binding<String>(
-                get: { viewModal.currentUser?.username ?? "" },
-                set: { newValue in
-                    if var currentUser = viewModal.currentUser {
-                        currentUser.username = newValue
-                    }
+        Binding<String>(
+            get: { viewModal.currentUser?.username ?? "" },
+            set: { newValue in
+                if var currentUser = viewModal.currentUser {
+                    currentUser.username = newValue
                 }
-            )
-        }
+            }
+        )
+    }
     
     var body: some View {
-            NavigationView {
-                VStack {
-                    VStack(spacing: 16) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
-                            TextField("Username", text: bindingToUsername)
-                                .padding()
-                        }
-                        .frame(height: 48)
-                        
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
+        NavigationView {
+            VStack {
+                VStack(spacing: 16) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
+                        TextField("Username", text: bindingToUsername)
+                            .padding()
+                    }
+                    .frame(height: 48)
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
                         HStack {
                             VStack {
                                 if self.isNewPasswordVisible {
@@ -62,10 +62,10 @@ struct AccountInfoScreenView: View {
                         }
                     }
                     .frame(height: 48)
-                        
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(CGColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1)))
                         HStack {
                             VStack {
                                 if self.isPasswordVisible {
@@ -83,51 +83,52 @@ struct AccountInfoScreenView: View {
                             } label: {
                                 Image(systemName: self.isPasswordVisible ? "eye.slash.fill" : "eye.fill")
                                     .foregroundColor(Color.black)
-                                    
+                                
                             }
                             .padding()
                         }
                     }
                     .frame(height: 48)
-                    }
-                    .padding(.top, 62)
-                    Spacer()
-                    CustomButton(title: "Save changes")
-                        .padding(.bottom, 16)
-                        .onTapGesture {
-                            viewModal.changePassword(newPassword: viewModal.changeNewPassword, currentPassword: viewModal.changeOldPassword)
-                            viewModal.changeOldPassword = ""
-                            viewModal.changeNewPassword = ""
-                            isShowingAlert = true
-                        }
-                        .disabled(!formIsValid)
-                        .opacity(formIsValid ? 1.0 : 0.7)
-                        .alert(isPresented: $isShowingAlert) {
-                            Alert(
-                                title: Text("Attention"),
-                                message: Text(viewModal.alertText),
-                                dismissButton: .default(Text("OK")) {
-                                    dismiss()
-                                }
-                            )
-                        }
                 }
-                .padding([.leading, .trailing], 16)
-                .navigationTitle("Account Information")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Image(systemName: "chevron.backward")
-                            .foregroundColor(.black)
-                            .font(.system(size: 23, weight: .medium))
-                            .onTapGesture {
+                .padding(.top, 62)
+                Spacer()
+                CustomButton(title: "Save changes")
+                    .padding(.bottom, 16)
+                    .onTapGesture {
+                        viewModal.changePassword(newPassword: viewModal.changeNewPassword,
+                                                currentPassword: viewModal.changeOldPassword)
+                        viewModal.changeOldPassword = ""
+                        viewModal.changeNewPassword = ""
+                        isShowingAlert = true
+                    }
+                    .disabled(!formIsValid)
+                    .opacity(formIsValid ? 1.0 : 0.7)
+                    .alert(isPresented: $isShowingAlert) {
+                        Alert(
+                            title: Text("Attention"),
+                            message: Text(viewModal.alertText),
+                            dismissButton: .default(Text("OK")) {
                                 dismiss()
                             }
+                        )
                     }
+            }
+            .padding([.leading, .trailing], 16)
+            .navigationTitle("Account Information")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.black)
+                        .font(.system(size: 23, weight: .medium))
+                        .onTapGesture {
+                            dismiss()
+                        }
                 }
             }
+        }
     }
-
+    
 }
 extension AccountInfoScreenView: AuthFormProtocol {
     var formIsValid: Bool {
