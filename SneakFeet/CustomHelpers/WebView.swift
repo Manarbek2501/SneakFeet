@@ -46,10 +46,10 @@ struct WebView: UIViewRepresentable {
             super.init()
             
             estimatedProgressObserver = self.parent.webView.observe(\.estimatedProgress, options: [.new]) { [weak self] webView, _ in
-                print(Float(webView.estimatedProgress))
-                guard let weakSelf = self else{return}
-                
-                weakSelf.viewModel.progress = webView.estimatedProgress
+                DispatchQueue.main.async {
+                    guard let weakSelf = self else { return }
+                    weakSelf.viewModel.progress = webView.estimatedProgress
+                }
             }
         }
         

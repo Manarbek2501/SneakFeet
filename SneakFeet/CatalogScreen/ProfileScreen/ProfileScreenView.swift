@@ -121,7 +121,6 @@ private struct FaqBlocks: View {
 
 private struct FaqQuestions: View {
     @State private var isPresentWebView = false
-    @State private var progress: Float = 0.0
     @ObservedObject var webModel = WebViewModel(progress: 0.0)
     var questionTitle: String
     var questionURL: String
@@ -141,23 +140,25 @@ private struct FaqQuestions: View {
         .fullScreenCover(isPresented: $isPresentWebView, content: {
             NavigationView {
                 VStack {
-                    ProgressView(value: webModel.progress)
-                        .progressViewStyle(LinearProgressViewStyle())
-                    
-                    WebView(viewModel: webModel, url: URL(string: questionURL)!)
-                        .ignoresSafeArea()
-                        .navigationTitle("sneakersinfo.com")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Image(systemName: "chevron.backward")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 23, weight: .medium))
-                                    .onTapGesture {
-                                        isPresentWebView = false
-                                    }
-                            }
+                    if webModel.progress != 1.0 {
+                        withAnimation {
+                            ProgressView(value: webModel.progress)
+                                .progressViewStyle(LinearProgressViewStyle())
                         }
+                    }
+                    WebView(viewModel: webModel, url: URL(string: questionURL)!)
+                }
+                .navigationTitle("sneakersinfo.com")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(.black)
+                            .font(.system(size: 23, weight: .medium))
+                            .onTapGesture {
+                                isPresentWebView = false
+                            }
+                    }
                 }
             }
         })
