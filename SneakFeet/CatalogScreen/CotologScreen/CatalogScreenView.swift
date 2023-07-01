@@ -17,6 +17,7 @@ struct CatalogScreenView: View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack {
+                    // for future it is better to reuse colors and all of the stuff related to design system 
                     Color(CGColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1))
                         .edgesIgnoringSafeArea(.top)
                     ScrollView {

@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 import FirebaseDatabase
 
-class StoreModal: ObservableObject {
+class StoreModal: ObservableObject { // It's model bro haha
     @Published var cards = [CatalogData]()
     @Published var items = [Int]()
     @Published var cardsWithCount = [UUID : Int]()
@@ -19,11 +19,11 @@ class StoreModal: ObservableObject {
         items.append(item)
         saveStepperItems(items)
     }
-    func saveStepperItems(_ item: [Int]) {
+    func saveStepperItems(_ item: [Int]) { // try to leave space between your functions :)
         let defaults = UserDefaults.standard
         defaults.set(items, forKey: "stepperItems")
     }
-    func deleteStepperItems(item: Int) {
+    func deleteStepperItems(item: Int) {// what do we do with item here ?
         if !items.isEmpty{
             items.removeLast()
         }
